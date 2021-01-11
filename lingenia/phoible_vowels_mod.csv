@@ -1,0 +1,342 @@
+frequency,in_inventories,pk,unicode,jsondata
+0.915488533,2914,17,\u006D,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Bilabial_nasal""}"
+0.857681433,2730,13,\u006B,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_velar_stop""}"
+0.853283066,2716,12,\u006A,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Palatal_approximant""}"
+0.814954445,2594,23,\u0070,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_bilabial_stop""}"
+0.780081684,2483,38,\u0077,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_labial%E2%80%93velar_approximant""}"
+0.737983035,2349,18,\u006E,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_nasal""}"
+0.648444863,2064,28,\u0074,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.642161483,2044,16,\u006C,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_lateral_approximant""}"
+0.634621426,2020,26,\u0073,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_sibilant""}"
+0.598806158,1906,41,\u0062,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_bilabial_stop""}"
+0.595978637,1897,19,\u014B,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Velar_nasal""}"
+0.537857367,1712,61,\u0261,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_velar_stop""}"
+0.535029846,1703,9,\u0068,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_glottal_fricative""}"
+0.432296576,1376,42,\u0064,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_stop""}"
+0.418473139,1332,79,\u0072,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_trill""}"
+0.417530631,1329,114,\u0066,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_labiodental_fricative""}"
+0.394282124,1255,230,\u0272,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Palatal_nasal""}"
+0.38265787,1218,30,\u0074\u0361,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_palato-alveolar_affricate""}"
+0.355325165,1131,40,\u0294,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Glottal_stop""}"
+0.346842601,1104,81,\u0283,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_palato-alveolar_fricative""}"
+0.280552937,893,102,\u007A,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_sibilant""}"
+0.257618599,820,156,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_palato-alveolar_affricate""}"
+0.256361923,816,140,\u0076,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template:Internet_dialects""}"
+0.243166824,774,216,\u027E,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_flap""}"
+0.222117499,707,194,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.209236569,666,150,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_affricate""}"
+0.190072259,605,14,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_velar_stop""}"
+0.185988062,592,24,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_bilabial_stop""}"
+0.180961357,576,98,\u0078,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_velar_fricative""}"
+0.16713792,532,185,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_nasal""}"
+0.1511153,481,160,\u0288,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_retroflex_stop""}"
+0.150172793,478,103,\u0292,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_palato-alveolar_fricative""}"
+0.136977694,436,280,\u0263,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_velar_fricative""}"
+0.136349356,434,168,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_stop""}"
+0.131322652,418,279,\u0063,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_palatal_stop""}"
+0.126610116,403,29,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.12535344,399,186,\u0273,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Retroflex_nasal""}"
+0.119384229,380,2204,,{}
+0.117499215,374,603,,{}
+0.117185046,373,607,,{}
+0.116870877,372,318,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_velar_stop""}"
+0.1156142,368,323,\u025F,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_palatal_stop""}"
+0.112786679,359,212,\u026D,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Retroflex_lateral_approximant""}"
+0.098334904,313,3171,,{}
+0.098020735,312,206,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_affricate""}"
+0.096135721,306,151,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_bilabial_fricative""}"
+0.096135721,306,310,\u027B,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Retroflex_approximant""}"
+0.094250707,300,261,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_bilabial_implosive""}"
+0.091737355,292,240,,{}
+0.084825636,270,242,,{}
+0.084197298,268,246,,{}
+0.080741439,257,157,\u0256,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_retroflex_stop""}"
+0.08042727,256,55,\u0071,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_uvular_stop""}"
+0.077913918,248,262,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_implosive""}"
+0.076028904,242,69,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Velar_ejective""}"
+0.071944706,229,31,,{}
+0.068488847,218,326,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_lateral_approximant""}"
+0.066918002,213,104,\u03C7,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_uvular_fricative""}"
+0.063462143,202,3170,,{}
+0.062205467,198,159,\u0282,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_retroflex_fricative""}"
+0.061262959,195,87,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_affricate""}"
+0.059692114,190,117,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_velar_stop""}"
+0.0578071,184,96,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Palato-alveolar_ejective_affricate""}"
+0.056236255,179,196,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.056236255,179,222,\u027D,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Retroflex_flap""}"
+0.055922086,178,72,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Bilabial_ejective""}"
+0.050581213,161,748,,{}
+0.050267044,160,329,\u00F0,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_dental_fricative""}"
+0.049010368,156,97,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_ejective""}"
+0.049010368,156,132,\u0281,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_uvular_fricative""}"
+0.049010368,156,1450,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_nasal""}"
+0.048067861,153,392,\u0278,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_bilabial_fricative""}"
+0.048067861,153,772,,{}
+0.046811184,149,356,\u026C,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_lateral_fricative""}"
+0.046811184,149,1452,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_trill""}"
+0.046182846,147,517,\u028E,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Palatal_lateral_approximant""}"
+0.043983663,140,2517,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_lateral_approximant""}"
+0.043669494,139,161,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_retroflex_stop""}"
+0.043041156,137,290,\u00E7,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_palatal_fricative""}"
+0.043041156,137,774,,{}
+0.042726987,136,753,,{}
+0.040527804,129,243,,{}
+0.040213635,128,91,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_ejective_affricate""}"
+0.038956959,124,192,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_sibilant""}"
+0.038956959,124,291,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_palatal_affricate""}"
+0.038956959,124,359,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Velar_nasal""}"
+0.03864279,123,335,\u03B8,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_dental_fricative""}"
+0.038014452,121,867,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolo-palatal_affricate""}"
+0.036757776,117,1692,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.036443607,116,849,\u0255,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolo-palatal_fricative""}"
+0.035815269,114,2835,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_approximant""}"
+0.034872762,111,617,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_palatal_affricate""}"
+0.034244423,109,119,\u0266,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_glottal_fricative""}"
+0.033301916,106,162,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_retroflex_affricate""}"
+0.031731071,101,530,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_velar_stop""}"
+0.031102733,99,321,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_palatal_stop""}"
+0.030788564,98,214,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Bilabial_nasal""}"
+0.029846057,95,637,,{}
+0.029217719,93,215,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_nasal""}"
+0.02890355,92,613,,{}
+0.02890355,92,750,,{}
+0.028589381,91,300,\u0290,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_retroflex_fricative""}"
+0.028275212,90,57,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.027018536,86,183,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_velar_stop""}"
+0.026704367,85,184,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_lateral_approximant""}"
+0.026390198,84,68,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_velar_stop""}"
+0.026390198,84,78,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Uvular_ejective""}"
+0.02576186,82,557,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_velar_stop""}"
+0.025447691,81,64,\u0127,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_pharyngeal_fricative""}"
+0.025447691,81,74,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_uvular_stop""}"
+0.024819353,79,471,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_bilabial_stop""}"
+0.024505184,78,470,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_velar_stop""}"
+0.024191015,77,100,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_velar_fricative""}"
+0.024191015,77,1037,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolo-palatal_affricate""}"
+0.023562677,75,239,\u006D\u0325,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_bilabial_nasal""}"
+0.023248508,74,853,\u0291,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolo-palatal_fricative""}"
+0.022934339,73,238,\u006C\u0325,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_lateral_approximant""}"
+0.022934339,73,384,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_sibilant""}"
+0.02262017,72,65,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_velar_stop""}"
+0.02262017,72,71,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_bilabial_stop""}"
+0.02262017,72,523,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Bilabial_nasal""}"
+0.022306001,71,49,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_lateral_approximant""}"
+0.022306001,71,272,\u028B,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Labiodental_approximant""}"
+0.022306001,71,524,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_bilabial_stop""}"
+0.022306001,71,595,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_sibilant""}"
+0.021677663,69,389,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Bilabial_nasal""}"
+0.021049325,67,431,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_glottal_fricative""}"
+0.020735156,66,189,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_bilabial_stop""}"
+0.020735156,66,3167,,{}
+0.020420986,65,203,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_bilabial_stop""}"
+0.020106817,64,298,\u0270,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Velar_approximant""}"
+0.020106817,64,3168,,{}
+0.019792648,63,43,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_stop""}"
+0.019792648,63,106,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_uvular_fricative""}"
+0.019478479,62,67,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_velar_stop""}"
+0.019478479,62,907,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolo-palatal_affricate""}"
+0.01916431,61,46,\u029D,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_palatal_fricative""}"
+0.01916431,61,241,\u006E\u0325,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_nasal""}"
+0.01916431,61,622,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_bilabial_stop""}"
+0.018850141,60,345,\u0279,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_approximant""}"
+0.018221803,58,210,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_velar_stop""}"
+0.018221803,58,217,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.018221803,58,404,,{}
+0.018221803,58,875,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_affricate""}"
+0.017907634,57,50,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_nasal""}"
+0.017907634,57,167,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_bilabial_stop""}"
+0.017279296,55,144,\u0127,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_pharyngeal_fricative""}"
+0.017279296,55,163,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_retroflex_affricate""}"
+0.017279296,55,388,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_bilabial_stop""}"
+0.016965127,54,191,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_trill""}"
+0.016965127,54,370,,{}
+0.016965127,54,1380,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_velar_stop""}"
+0.016650958,53,472,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.016336789,52,56,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_sibilant""}"
+0.016336789,52,406,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_bilabial_stop""}"
+0.016336789,52,752,,{}
+0.01602262,51,463,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.015708451,50,182,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Palatal_approximant""}"
+0.015708451,50,436,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_uvular_stop""}"
+0.015394282,49,292,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_palatal_affricate""}"
+0.015394282,49,754,,{}
+0.015080113,48,512,,{}
+0.015080113,48,563,\u026E,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_lateral_fricative""}"
+0.015080113,48,947,,{}
+0.014765944,47,85,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.014765944,47,414,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_palato-alveolar_fricative""}"
+0.014765944,47,562,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_palatal_implosive""}"
+0.014451775,46,62,\u0262,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_uvular_stop""}"
+0.014451775,46,158,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_retroflex_affricate""}"
+0.014451775,46,297,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Labialized_palatal_approximant""}"
+0.014451775,46,408,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_labiodental_fricative""}"
+0.014451775,46,505,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_retroflex_stop""}"
+0.014451775,46,763,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_nasal""}"
+0.014451775,46,1296,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.014137606,45,777,,{}
+0.013823437,44,773,,{}
+0.013823437,44,1191,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_labiodental_fricative""}"
+0.013823437,44,3166,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_retroflex_stop""}"
+0.013823437,44,3172,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.013509268,43,205,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_stop""}"
+0.013509268,43,375,,{}
+0.013509268,43,3173,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.013195099,42,529,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Palatal_nasal""}"
+0.01288093,41,173,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_retroflex_stop""}"
+0.01288093,41,371,,{}
+0.012566761,40,197,,{}
+0.012566761,40,251,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_labialized_velar_approximant""}"
+0.012566761,40,630,,{}
+0.012252592,39,223,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Velar_nasal""}"
+0.012252592,39,402,\u027A,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_lateral_flap""}"
+0.011938423,38,683,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_labiodental_fricative""}"
+0.011938423,38,1295,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_sibilant""}"
+0.011624254,37,169,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_stop""}"
+0.011624254,37,220,\u03B2,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_bilabial_fricative""}"
+0.011624254,37,369,,{}
+0.011624254,37,533,,{}
+0.011310085,36,200,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_labial%E2%80%93velar_approximant""}"
+0.011310085,36,249,\u0072\u0325,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_trill""}"
+0.011310085,36,685,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_trill""}"
+0.011310085,36,749,,{}
+0.011310085,36,788,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_trill""}"
+0.010681747,34,133,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_uvular_fricative""}"
+0.010681747,34,627,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_glottal_fricative""}"
+0.010681747,34,840,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_affricate""}"
+0.010367578,33,83,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_palato-alveolar_fricative""}"
+0.010367578,33,459,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Palatal_approximant""}"
+0.010367578,33,464,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_labial%E2%80%93velar_approximant""}"
+0.010053409,32,1275,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_nasal""}"
+0.010053409,32,1453,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_sibilant""}"
+0.00973924,31,398,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Palatal_nasal""}"
+0.00973924,31,1588,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Velarized_alveolar_lateral_approximant""}"
+0.009425071,30,245,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Velar_nasal""}"
+0.009425071,30,689,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template:Internet_dialects""}"
+0.009425071,30,690,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_sibilant""}"
+0.009110902,29,77,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_uvular_stop""}"
+0.009110902,29,134,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_sibilant""}"
+0.009110902,29,564,\u2C71,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Labiodental_flap""}"
+0.009110902,29,1284,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_lateral_approximant""}"
+0.008796733,28,172,,{}
+0.008796733,28,195,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.008796733,28,424,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_lateral_ejective_affricate""}"
+0.008796733,28,430,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Palatal_ejective""}"
+0.008168395,26,244,\u030A\u0272,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Palatal_nasal""}"
+0.008168395,26,333,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_sibilant""}"
+0.008168395,26,461,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Bilabial_nasal""}"
+0.008168395,26,558,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_velar_stop""}"
+0.008168395,26,621,,{}
+0.008168395,26,629,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_flap""}"
+0.008168395,26,779,,{}
+0.008168395,26,2134,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_palatal_affricate""}"
+0.007854226,25,755,,{}
+0.007540057,24,571,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_sibilant""}"
+0.007540057,24,775,,{}
+0.007540057,24,785,,{}
+0.007540057,24,1283,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Palatal_approximant""}"
+0.007540057,24,2553,,{}
+0.007540057,24,3174,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.007540057,24,3175,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.007225888,23,143,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Glottal_stop""}"
+0.007225888,23,419,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_velar_fricative""}"
+0.007225888,23,694,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_affricate""}"
+0.007225888,23,899,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_bilabial_stop""}"
+0.007225888,23,2554,,{}
+0.006911719,22,179,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_velar_stop""}"
+0.006911719,22,322,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Palatal_approximant""}"
+0.006911719,22,396,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.006911719,22,632,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_velar_implosive""}"
+0.006911719,22,2558,,{}
+0.006597549,21,308,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Bilabial_nasal""}"
+0.006597549,21,716,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Bilabial_nasal""}"
+0.006597549,21,764,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Template_talk:Internet_dialects""}"
+0.006597549,21,767,,{}
+0.006597549,21,1280,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Glottal_stop""}"
+0.006597549,21,1282,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_stop""}"
+0.006597549,21,1315,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_trill""}"
+0.00628338,20,751,,{}
+0.00628338,20,848,,{}
+0.00628338,20,1289,,{}
+0.00628338,20,1376,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_bilabial_stop""}"
+0.00628338,20,2555,,{}
+0.005969211,19,110,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_stop""}"
+0.005969211,19,377,\u0280,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Uvular_trill""}"
+0.005969211,19,412,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_uvular_stop""}"
+0.005969211,19,935,,{}
+0.005969211,19,2052,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_sibilant""}"
+0.005655042,18,126,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_nasal""}"
+0.005655042,18,387,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_lateral_approximant""}"
+0.005655042,18,468,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Nasal_labialized_velar_approximant""}"
+0.005655042,18,489,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Glottal_stop""}"
+0.005655042,18,620,,{}
+0.005655042,18,678,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Labiodental_nasal""}"
+0.005655042,18,770,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Palatal_nasal""}"
+0.005655042,18,2277,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_bilabial_stop""}"
+0.005655042,18,2394,\u030A\u014B,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_velar_nasal""}"
+0.005340873,17,170,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_stop""}"
+0.005340873,17,204,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_stop""}"
+0.005340873,17,416,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_velar_fricative""}"
+0.005340873,17,462,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_nasal""}"
+0.005340873,17,628,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_bilabial_stop""}"
+0.005340873,17,816,,{}
+0.005340873,17,841,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_alveolar_affricate""}"
+0.005340873,17,905,,{}
+0.005340873,17,1297,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_sibilant""}"
+0.005340873,17,2282,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_velar_stop""}"
+0.005340873,17,2602,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_bilabial_stop""}"
+0.005026704,16,142,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_alveolar_sibilant""}"
+0.005026704,16,324,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_nasal""}"
+0.005026704,16,355,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_velar_stop""}"
+0.005026704,16,399,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Palatal_lateral_approximant""}"
+0.005026704,16,448,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Alveolar_ejective_fricative""}"
+0.005026704,16,516,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiceless_palato-alveolar_fricative""}"
+0.005026704,16,2605,,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Voiced_velar_stop""}"
+0.000628338,2,1514,\u2C71\u031F,"{""wikipedia_url"": ""http://en.wikipedia.org/wiki/Bilabial_flap""}"
+0,0,0,\u0299\u0325,
+0.000628338,2,1713,\u0299,
+0.005655042,18,678,\u0271,
+0.000314169,1,1822,\u0070\u032A,
+0.000628338,2,1129,\u0062\u032A,
+0,0,0,\u028B\u0325,
+0.000314169,1,2395,\u006E\u033C,
+0.000314169,1,2396,\u0074\u033C,
+0,0,0,\u0064\u033C,
+0.000314169,1,2397,\u00F0\u033C,
+0,0,0,\u03B8\u033C,
+0,0,0,\u027E\u033C,
+0,0,0,\u03B8\u0331,
+0,0,0,\u00F0\u0331,
+0.000942507,3,2765,\u0279\u0325,
+0.002513352,8,1393,\u027E\u0325,
+0,0,0,\u027A\u0325,
+0,0,0,\u030A\u0279\u0331\u02D4,
+0,0,0,\u0279\u0331\u02D4,
+0.000314169,1,975,\u030A\u0273,
+0,0,0,\u027B\u02D4,
+0.000628338,2,3120,\u030A\u027B,
+0.000314169,1,2952,\u030A\u027D,
+0,0,0,\u030A\u027D?\u0361\u0325,
+0,0,0,\u027D?\u0361,
+0,0,0,\u030A\u026D\u02D4,
+0,0,0,\u026D\u02D4,
+0.000942507,3,974,\u030A\u026D,
+0.001885014,6,3176,\u0306\u026D,
+0,0,0,\u030A\u028E\u031D,
+0,0,0,\u028E\u031D,
+0.000314169,1,1563,\u028E\u0325,
+0,0,0,\u0306\u028E,
+0,0,0,\u030A\u0270,
+0,0,0,\u030A\u029F\u031D,
+0,0,0,\u029F\u031D,
+0,0,0,\u029F\u0325,
+0.000314169,1,1265,\u029F,
+0,0,0,\u0306\u029F,
+0.002199183,7,410,\u0274,
+0,0,0,\u0306\u0262,
+0,0,0,\u0280\u0325,
+0,0,0,\u029F\u0331,
+0.001256676,4,1423,\u02A1,
+0,0,0,\u0306\u02A1,
+0.003770028,12,2474,\u029C,
+0.002513352,8,2621,\u02A2,
+0,0,0,\u0294\u031D,

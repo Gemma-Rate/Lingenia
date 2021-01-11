@@ -1,0 +1,80 @@
+body {
+  background-color: white;
+  font-family: Arial;
+  font-size: 30px;
+}
+
+.head1 {
+  color: black;
+  text-align: center;
+  padding: 20px;
+  font-size: 40px;
+  }
+
+.a1 {
+  color: white;
+  padding: 10px;
+  font-size: 20px;
+  font-family: Arial;
+  text-decoration: none;
+}
+
+a {
+  color: black;
+  padding: 10px;
+  font-size: 20px;
+  font-family: Arial;
+}
+
+.nav1 {
+  color: white;
+  text-align: left;
+  background-color: gray;
+  padding: 20px;
+  font-size: 20px;
+  }
+
+th td {
+  text-align: left;
+  padding: 30px;
+  font-size: 20px;
+}
+
+table {
+  border: 3px solid black;
+  border-collapse: collapse;
+  padding: 30px;
+  font-size: 20px;
+}
+
+.para1 {
+  color: black;
+  text-align: left;
+  font-size: 20px;
+  padding: 30px;
+  }
+
+.cl {
+  color: black;
+  font-weight: bold;
+  text-align: left;
+  font-size: 20px;
+  padding: 30px;
+  }
+
+label {
+  color: black;
+  text-align: left;
+  font-size: 20px;
+  padding: 30px;
+  }
+
+input {
+  color: black;
+  text-align: left;
+  font-size: 20px;
+  }
+
+audio {
+ width: 50px;
+}​
