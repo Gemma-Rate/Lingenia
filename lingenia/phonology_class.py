@@ -206,8 +206,6 @@ class Phonology(object):
         n_selected = 3 #self.generate_prob_list(len(liquid_cols))
         # Randomly generate the number of liquid columns to select.
 
-        print(total_consonant_no, nasal_consonants)
-
         liquid_consonants = []
         liquid_num = self.generate_prob_list(total_consonant_no)
         while (liquid_num > total_consonant_no) or (liquid_num < 2):
