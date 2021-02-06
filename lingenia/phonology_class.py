@@ -236,7 +236,6 @@ class Phonology(object):
             new_consonant_list.extend(self.select_from_column(remaining_col, select_num))
             total_consonant_no = total_consonant_no - len(new_consonant_list)
         
-        print(new_consonant_list)
 
     def select_column(self, column_list):
         """
