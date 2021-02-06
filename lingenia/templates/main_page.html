@@ -19,6 +19,7 @@
     <title>Lingenia</title>
 </head>
 <body>
+
 <!Website dom goes here>
 
     <!Top bar:>
@@ -30,7 +31,7 @@
         <!a are hyperlinks>
     </nav>
 
-    <!Cool title section>
+    <!Title section>
     <section class="head1">
         <!div is a division, or section>
         <h1>Lingenia</h1>
@@ -38,248 +39,274 @@
         <!p is a paragraph>
     </section>
 
-    <section>
+    <div class="grid-container">
 
-        <!data inputs>
-        <form action="/lingenia" method="POST">
-            <label id="vowel_no">Number of vowels:</label><br>
-            <input type="text" name="vowel_no">
-            <input type="submit" value="Generate phonemes" id="vowels_id">
-        </form>
-    </section>
+        <div class="grid-item">
+            <!data inputs>
+            <form action="/lingenia" method="POST">
+                <label id="vowel_no">Number of vowels:</label><br>
+                <input type="text" name="vowel_no">
+                <input type="submit" value="Generate vowels" id="vowels_id">
+            </form>
+        </div>
 
-    <section class="para1">
-        <p>IPA vowels (Red=Selected):</p>
-    </section>
+        <div class="grid-item">
+            <!data inputs>
+            <form action="/lingenia" method="POST">
+                <label id="consonant_no">Number of consonants:</label><br>
+                <input type="text" name="vowel_no">
+                <input type="submit" value="Generate consonants" id="vowels_id">
+            </form>
+        </div>
 
-    <section class="vowels1">
-        <table style="width:auto">
-          <tr>
-            <th> </th>
-            <th>Front</th>
-            <th>Central</th>
-            <th>Back</th>
-          </tr>
-          <tr>
-            <td><span id="cl" >Close</span></td>
-            <td><span id="BI" >&#x0069;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/9/91/Close_front_unrounded_vowel.ogg" />
-                </audio>
-                </span>,
-                <span id="BY">&#x0079;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Close_front_rounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-            <td><span id="B0268">&#x0268;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/5/53/Close_central_unrounded_vowel.ogg" />
-                </audio>
-                </span>,
-                <span id="B0289">&#x0289;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/6/66/Close_central_rounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-            <td><span id="B026F">&#x026F;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Close_back_unrounded_vowel.ogg" />
-                </audio>
-                </span>,
-                <span id="BU">&#x0075;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Close_back_rounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Near-close</td>
-            <td><span id="B026A">&#x026A;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Near-close_near-front_unrounded_vowel.ogg" />
-                </audio>
-                </span>,
-                <span id="B028F">&#x028F;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Near-close_near-front_rounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-            <td></td>
-            <td>
-                <span id="B028A">&#x028A;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Near-close_near-back_rounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Close-mid</td>
-            <td><span id="BE">&#x0065;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Close-mid_front_unrounded_vowel.ogg" />
-                </audio>
-                </span>,
-                <span id="B00F8">&#x00F8;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/5/53/Close-mid_front_rounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-            <td><span id="B0258">&#x0258;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/6/60/Close-mid_central_unrounded_vowel.ogg" />
-                </audio>
-                </span>,
-                <span id="B0275">&#x0275;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Close-mid_central_rounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-            <td><span id="B0264">&#x0264;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/2/26/Close-mid_back_unrounded_vowel.ogg" />
-                </audio>
-                </span>,
-                <span id="BO">&#x006F;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/8/84/Close-mid_back_rounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Mid</td>
-            <td><span id="B0065031E">&#x0065;&#x031E;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Mid_front_unrounded_vowel.ogg" />
-                </audio>
-                </span>,
-                <span id="B00F8031E">&#x00F8;&#x031E;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Mid_front_rounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-            <td><span id="B0259">&#x0259;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Mid-central_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-            <td><span id="B0264\\U031E">&#x0264;&#x031E;
-                </span>,
-                <span id="B006F\\U031E">&#x006F;&#x031E;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Mid_back_rounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Open-mid</td>
-            <td><span id="B025B">&#x025B;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/7/71/Open-mid_front_unrounded_vowel.ogg" />
-                </audio>
-                </span>,
-                <span id="B0153">&#x0153;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/0/00/Open-mid_front_rounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-            <td><span id="B025C">&#x025C;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/0/01/Open-mid_central_unrounded_vowel.ogg" />
-                </audio>
-                </span>,
-                <span id="B025E">&#x025E;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Open-mid_central_rounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-            <td><span id="B028C">&#x028C;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/8/80/PR-open-mid_back_unrounded_vowel2.ogg" />
-                </audio>
-                </span>,
-                <span id="B0254">&#x0254;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/d/d0/PR-open-mid_back_rounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Near-open</td>
-            <td><span id="B00E6">&#x00E6;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Near-open_front_unrounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-            <td><span id="B0250">&#x0250;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/1/1e/PR-near-open_central_unrounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-            <td> </td>
-          </tr>
-          <tr>
-            <td>Open</td>
-            <td><span id="BA">&#x0061;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/0/0e/PR-open_front_unrounded_vowel.ogg" />
-                </audio>
-                </span>,
-                <span id="B0276">&#x0276;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Open_front_rounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-            <td><span id="B00610308">&#x0061;&#x0308;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/5/50/Open_central_unrounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-            <td><span id="B0251">&#x0251;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Open_back_unrounded_vowel.ogg" />
-                </audio>
-                </span>,
-                <span id="B0252">&#x0252;
-                <audio controls>
-                <source src="https://upload.wikimedia.org/wikipedia/commons/3/31/PR-open_back_rounded_vowel.ogg" />
-                </audio>
-                </span>
-            </td>
-          </tr>
-        </table>
-    </section>
+        <div class="grid-item">
+            <section class="para1">
+                <p>IPA vowels (Red=Selected):</p>
+            </section>
+        </div>
+
+        <div class="grid-item">
+            <div class="vowels1">
+                <table style="width:auto">
+                <tr>
+                    <th> </th>
+                    <th>Front</th>
+                    <th>Central</th>
+                    <th>Back</th>
+                </tr>
+                <tr>
+                    <td><span id="cl" >Close</span></td>
+                    <td><span id="BI" >&#x0069;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/9/91/Close_front_unrounded_vowel.ogg" />
+                        </audio>
+                        </span>,
+                        <span id="BY">&#x0079;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Close_front_rounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                    <td><span id="B0268">&#x0268;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/5/53/Close_central_unrounded_vowel.ogg" />
+                        </audio>
+                        </span>,
+                        <span id="B0289">&#x0289;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/6/66/Close_central_rounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                    <td><span id="B026F">&#x026F;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Close_back_unrounded_vowel.ogg" />
+                        </audio>
+                        </span>,
+                        <span id="BU">&#x0075;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Close_back_rounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Near-close</td>
+                    <td><span id="B026A">&#x026A;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Near-close_near-front_unrounded_vowel.ogg" />
+                        </audio>
+                        </span>,
+                        <span id="B028F">&#x028F;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Near-close_near-front_rounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                    <td></td>
+                    <td>
+                        <span id="B028A">&#x028A;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Near-close_near-back_rounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Close-mid</td>
+                    <td><span id="BE">&#x0065;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Close-mid_front_unrounded_vowel.ogg" />
+                        </audio>
+                        </span>,
+                        <span id="B00F8">&#x00F8;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/5/53/Close-mid_front_rounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                    <td><span id="B0258">&#x0258;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/6/60/Close-mid_central_unrounded_vowel.ogg" />
+                        </audio>
+                        </span>,
+                        <span id="B0275">&#x0275;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Close-mid_central_rounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                    <td><span id="B0264">&#x0264;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/2/26/Close-mid_back_unrounded_vowel.ogg" />
+                        </audio>
+                        </span>,
+                        <span id="BO">&#x006F;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/8/84/Close-mid_back_rounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mid</td>
+                    <td><span id="B0065031E">&#x0065;&#x031E;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Mid_front_unrounded_vowel.ogg" />
+                        </audio>
+                        </span>,
+                        <span id="B00F8031E">&#x00F8;&#x031E;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Mid_front_rounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                    <td><span id="B0259">&#x0259;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Mid-central_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                    <td><span id="B0264\\U031E">&#x0264;&#x031E;
+                        </span>,
+                        <span id="BO031E">&#x006F;&#x031E;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Mid_back_rounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Open-mid</td>
+                    <td><span id="B025B">&#x025B;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/7/71/Open-mid_front_unrounded_vowel.ogg" />
+                        </audio>
+                        </span>,
+                        <span id="B0153">&#x0153;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/0/00/Open-mid_front_rounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                    <td><span id="B025C">&#x025C;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/0/01/Open-mid_central_unrounded_vowel.ogg" />
+                        </audio>
+                        </span>,
+                        <span id="B025E">&#x025E;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Open-mid_central_rounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                    <td><span id="B028C">&#x028C;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/8/80/PR-open-mid_back_unrounded_vowel2.ogg" />
+                        </audio>
+                        </span>,
+                        <span id="B0254">&#x0254;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/d/d0/PR-open-mid_back_rounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Near-open</td>
+                    <td><span id="B\\XE6">&#x00E6;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Near-open_front_unrounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                    <td><span id="B0250">&#x0250;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/1/1e/PR-near-open_central_unrounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>Open</td>
+                    <td><span id="BA">&#x0061;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/0/0e/PR-open_front_unrounded_vowel.ogg" />
+                        </audio>
+                        </span>,
+                        <span id="B0276">&#x0276;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Open_front_rounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                    <td><span id="B00610308">&#x0061;&#x0308;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/5/50/Open_central_unrounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                    <td><span id="B0251">&#x0251;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Open_back_unrounded_vowel.ogg" />
+                        </audio>
+                        </span>,
+                        <span id="B0252">&#x0252;
+                        <audio controls>
+                        <source src="https://upload.wikimedia.org/wikipedia/commons/3/31/PR-open_back_rounded_vowel.ogg" />
+                        </audio>
+                        </span>
+                    </td>
+                </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 
         {% if vowel_json %}
         <script>
             var v = JSON.parse('{{ vowel_json | tojson | safe}}');
-
-            var vlist = v['vowels'].split(" ");
+            var vlist = v['vowels'].split(",");
             var i;
             for (i = 0; i < vlist.length; i++) {
-            console.log(vlist[i]);
-            document.getElementById(vlist[i]).style.color = "red";
+                console.log(vlist[i]);
+                document.getElementById(vlist[i]).style.color = "red";
              }
         </script>
         {% endif %}
 
+
+        {% if consonant_json %}
+        <script>
+            var c = JSON.parse('{{ consonant_json | tojson | safe}}');
+            var clist = c['consonants'].split(",");
+            var i;
+            for (i = 0; i < clist.length; i++) {
+                console.log(clist[i]);
+                document.getElementById(clist[i]).style.color = "red";
+             }
+        </script>
+        {% endif %}
 </body>
 </html>

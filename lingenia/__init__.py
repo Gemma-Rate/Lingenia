@@ -55,15 +55,19 @@ def make_app(test_config=None):
         phonology.generate_vowels_full()
 
         vowel_list = phonology.vowels
+        print(vowel_list)
         encoded = [str(a.encode('unicode_escape', 'backslashreplace')) for a in
                    list(vowel_list)]
         vowel_code = [s.replace("b'\\\\u'", '') for s in encoded]
         vowel_code = [s.replace("\\\\u", '') for s in vowel_code]
         vowel_code = [s.replace("'", '').upper() for s in vowel_code]
-        vowel_str = ' '.join(vowel_code)
+        vowel_str = ','.join(vowel_code)
         # Single string with all the vowels, to pass to ajax.
 
+        print(vowel_str)
+
         vowel_json = {"vowels": vowel_str}
+        print(vowel_json)
 
         return fk.render_template('main_page.html', vowel_json=vowel_json)
        # return vowel_json

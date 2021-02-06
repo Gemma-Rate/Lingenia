@@ -4,8 +4,9 @@ import numpy as np
 import random as rn
 import pandas as pd
 
-from lingenia import phoible_vowels_dict as pv
 from lingenia import ipa_dict_simplified as ip
+from lingenia import phoible_vowels_dict as pv
+from lingenia import phoible_consonants_dict as pcs
 
 
 class Phonology(object):
@@ -14,7 +15,6 @@ class Phonology(object):
     """
 
     def __init__(self, consonant_number, vowel_number):
-        print(vowel_number)
         self.vowel_number = int(vowel_number)
         self.consonant_number = int(consonant_number)
         self.phoneme_list = []
@@ -76,13 +76,14 @@ class Phonology(object):
         gen_vowel_list = []
         # List to fill with generated vowel phonemes.
 
+        probabilities = vowel_phoible_data.sort_values('frequency',
+                                                    ascending=False)
+        # Cycle through the vowels until x number are selected
+        # checking for selection by whether a random number is below
+        # the frequency.
+
         while total_vowel_no > 0:
             # Order sounds by probability:
-            probabilities = vowel_phoible_data.sort_values('frequency',
-                                                      ascending=False)
-            # Cycle through the vowels until x number are selected
-            # checking for selection by whether a random number is below
-            # the frequency.
 
             for s in probabilities.index.values:
                 if total_vowel_no > 0:
@@ -92,7 +93,7 @@ class Phonology(object):
                     if vowel_is_selected:
                         gen_vowel_list.append(s)
                         total_vowel_no -= 1
-            print(gen_vowel_list)
+                        probabilities = probabilities.drop(index=s)
 
         self.vowels.extend(gen_vowel_list)
 
@@ -158,7 +159,7 @@ class Phonology(object):
         :param col_data:
         :return:
         """
-        consonant_phoible_data = pd.DataFrame(pc.phoible_consonants)
+        consonant_phoible_data = pd.DataFrame(pcs.phoible_consonants)
         decoded = [bytes(a, 'utf-8').decode("unicode_escape") for a in
                    list(consonant_phoible_data.index.values)]
         # Decode \u to unicode from the .csv
@@ -168,9 +169,8 @@ class Phonology(object):
         cindex = col_data.index.values
         column_list = []
         for i, s in zip(cindex, col_data):
-            print(col_data[i])
             if len(column_list)<sel_consonant_number:
-                if (len(s)>1) and (sel_consonant_number>1):
+                if (len(s)>2) and (sel_consonant_number>2):
                     # Check for voiced.
                     voiced = self.determing_voiced(s, probabilities)
                     column_list.extend(voiced)
@@ -189,31 +189,31 @@ class Phonology(object):
         """
         all_consonants = []
         total_consonant_no = self.consonant_number
-
         nasal_col = self.generate_consonant_column('Nasal')
 
         nasal_num = self.generate_prob_list(len(nasal_col.values))
-        while nasal_num<2:
+        while (nasal_num < 2) and (nasal_num > (total_consonant_no-2)):
+            # Minimum available nasal consonants and maximum possible 
+            # nasal consonants without losing liquid columns. 
             nasal_num = self.generate_prob_list(len(nasal_col.values)-1)
-        print(nasal_col)
         nasal_consonants = self.select_from_column(nasal_col,
                                                    nasal_num)
-        print(nasal_consonants)
         # Nasal consonants.
 
         total_consonant_no = total_consonant_no - len(nasal_consonants)
 
         liquid_cols = ['Trill', 'Lateral fricative', 'Lateral approximant']
         n_selected = 3 #self.generate_prob_list(len(liquid_cols))
-        print(n_selected)
         # Randomly generate the number of liquid columns to select.
+
+        print(total_consonant_no, nasal_consonants)
 
         liquid_consonants = []
         liquid_num = self.generate_prob_list(total_consonant_no)
         while (liquid_num > total_consonant_no) or (liquid_num < 2):
-            # Enxure the number of liquids is less than the total
+            # Ensure the number of liquids is less than the total
             # remaining consonant number and more than 2.
-            liquid_num = self.generate_prob_list(len(total_consonant_no))
+            liquid_num = self.generate_prob_list(total_consonant_no)
 
         try:
             for i in range(n_selected):
@@ -225,7 +225,6 @@ class Phonology(object):
             liquid_consonants.extend(self.select_from_column(liquid_col, liquid_num))
             total_consonant_no = total_consonant_no - len(liquid_consonants)
             # Liquid consonants.
-        print(liquid_consonants)
 
         remaining_cols = ['Stop', 'Fricative', 'Approximant', 'Tap/flap']
         rn.shuffle(remaining_cols)
@@ -236,7 +235,8 @@ class Phonology(object):
             select_num = self.generate_prob_list(total_consonant_no)
             new_consonant_list.extend(self.select_from_column(remaining_col, select_num))
             total_consonant_no = total_consonant_no - len(new_consonant_list)
-            print(new_consonant_list)
+        
+        print(new_consonant_list)
 
     def select_column(self, column_list):
         """
