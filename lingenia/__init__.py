@@ -50,12 +50,26 @@ def make_app(test_config=None):
     def forms():
 
         vowel_no = fk.request.form.get('vowel_no')
+        consonant_no = fk.request.form.get('consonant_no')
+        # Get vowel and consnants form. 
+   
+        if not vowel_no:
+            # Replace with constant if no vowel is specified.
+            vowel_no = 5
+        if not consonant_no:
+            # Do the same with consonants.
+            consonant_no = 20
 
-        phonology = pc.Phonology(5, vowel_no)
+        phonology = pc.Phonology(consonant_no, vowel_no)
         phonology.generate_vowels_full()
+        phonology.generate_all_consonants()
+        # Generate phonology.
 
         vowel_list = phonology.vowels
-        print(vowel_list)
+        consonant_list = phonology.consonants
+        # Get vowels and consonants from phonology class. w
+
+        print(vowel_list, consonant_list)
         encoded = [str(a.encode('unicode_escape', 'backslashreplace')) for a in
                    list(vowel_list)]
         vowel_code = [s.replace("b'\\\\u'", '') for s in encoded]

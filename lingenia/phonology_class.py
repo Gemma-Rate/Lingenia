@@ -20,6 +20,7 @@ class Phonology(object):
         self.phoneme_list = []
         self.vowels = []
         self.consonants = {}
+        self.consonants_list = []
 
     def generate_phonemes(self):
         """
@@ -166,18 +167,41 @@ class Phonology(object):
         consonant_phoible_data.index = decoded
         probabilities = consonant_phoible_data.sort_values('frequency',
                                                            ascending=False)
-        cindex = col_data.index.values
-        column_list = []
-        for i, s in zip(cindex, col_data):
-            if len(column_list)<sel_consonant_number:
-                if (len(s)>2) and (sel_consonant_number>2):
+        column_list, clist_len = [], 0
+        print(sel_consonant_number, len(col_data), col_data)
+        if len(col_data) <= sel_consonant_number:
+            # Reset length of the consonants to be selected. Include column -2.
+            sel_consonant_number = len(col_data)-2
+            # Include some flexibility in the column length, to avoid trying to 
+            # select phonemes with very low probabilities.
+
+        while clist_len < sel_consonant_number:
+            consonants_to_drop = []
+            for i, s in zip(col_data.index.values, col_data):
+                if (len(s)>2) and (clist_len < sel_consonant_number-2):
                     # Check for voiced.
+                    print('1:', clist_len, sel_consonant_number)
                     voiced = self.determing_voiced(s, probabilities)
                     column_list.extend(voiced)
-                else:
+                    consonants_to_drop.append(i)
+                    # Drop consonants from chosen column to prevent them from being selected twice.
+                    clist_len = len(column_list)
+                    print('2:', clist_len, sel_consonant_number)
+                elif clist_len < sel_consonant_number:
                     consonant_is_selected = self.select_element(s[0], probabilities)
+                    print('3:', clist_len, sel_consonant_number, s[0], probabilities.loc[s[0], 'frequency'], s)
                     if consonant_is_selected:
                         column_list.extend(s)
+                        print('4:', clist_len, sel_consonant_number, s[0])
+                        consonants_to_drop.append(i)
+                        # Drop consonants from chosen column to prevent them from being selected twice.
+                        clist_len = len(column_list)
+                elif clist_len >= sel_consonant_number:
+                    clist_len = len(column_list)
+                    print('5:', clist_len, sel_consonant_number, s[0])
+                    break
+            col_data = col_data.drop(labels=consonants_to_drop)
+            # Drop any selected consonants from the column.
 
         return column_list
 
@@ -187,57 +211,81 @@ class Phonology(object):
         Generate the required number of consonants.
         :return:
         """
-        all_consonants = []
-        total_consonant_no = self.consonant_number
+        total_consonant_no_remaining = self.consonant_number
         nasal_col = self.generate_consonant_column('Nasal')
+        print('ok1')
+
+        # Currently, the code can get 'stuck' on some selections, so we use a 
 
         nasal_num = self.generate_prob_list(len(nasal_col.values))
-        while (nasal_num < 2) and (nasal_num > (total_consonant_no-2)):
+        while (nasal_num < 2) and (nasal_num > (total_consonant_no_remaining -2)):
             # Minimum available nasal consonants and maximum possible 
             # nasal consonants without losing liquid columns. 
             nasal_num = self.generate_prob_list(len(nasal_col.values)-1)
         nasal_consonants = self.select_from_column(nasal_col,
                                                    nasal_num)
         # Nasal consonants.
-
-        total_consonant_no = total_consonant_no - len(nasal_consonants)
+        total_consonant_no_remaining = total_consonant_no_remaining  - len(nasal_consonants)
+        print('ok2', len(nasal_consonants), nasal_num, total_consonant_no_remaining)
 
         liquid_cols = ['Trill', 'Lateral fricative', 'Lateral approximant']
-        n_selected = 3 #self.generate_prob_list(len(liquid_cols))
         # Randomly generate the number of liquid columns to select.
+        
+        total_liquid_col_nos = 0
+        for col in liquid_cols:
+            total_liquid_col_nos = total_liquid_col_nos + len(self.generate_consonant_column(col).values)
+            # Get total numbers of liquids available. 
 
-        liquid_consonants = []
-        liquid_num = self.generate_prob_list(total_consonant_no)
-        while (liquid_num > total_consonant_no) or (liquid_num < 2):
+        liquid_consonants = {}
+        liquid_num = self.generate_prob_list(total_liquid_col_nos)
+        while (liquid_num > total_consonant_no_remaining) or (liquid_num < 2):
             # Ensure the number of liquids is less than the total
             # remaining consonant number and more than 2.
-            liquid_num = self.generate_prob_list(total_consonant_no)
+            liquid_num = self.generate_prob_list(total_liquid_col_nos)
+        print('ok3', liquid_num, total_liquid_col_nos, nasal_num, total_consonant_no_remaining)
 
-        try:
-            for i in range(n_selected):
+        for i in range(len(liquid_cols)):
+            if liquid_num > 2: 
                 liquid_col = self.select_column(liquid_cols)
-                liquid_consonants.extend(self.select_from_column(liquid_col, liquid_num))
-                total_consonant_no = total_consonant_no - len(liquid_consonants)
-        except TypeError:
-            liquid_col = self.select_column(liquid_cols)
-            liquid_consonants.extend(self.select_from_column(liquid_col, liquid_num))
-            total_consonant_no = total_consonant_no - len(liquid_consonants)
-            # Liquid consonants.
+                selected_liquids = self.select_from_column(liquid_col, liquid_num)
+                print(liquid_col)
+                liquid_consonants.update({liquid_col.name : selected_liquids})
+                liquid_num = liquid_num - len(selected_liquids)
+        
+        total_consonant_no_remaining = total_consonant_no_remaining - len(liquid_consonants)
+        # Liquid consonants.
+        print('ok4', len(liquid_consonants), liquid_num, total_liquid_col_nos, total_consonant_no_remaining)
 
-        remaining_cols = ['Stop', 'Fricative', 'Approximant', 'Tap/flap']
-        rn.shuffle(remaining_cols)
-        # Note the remaining columns and shuffle them so selection differs each time.
-        for r in remaining_cols:
-            new_consonant_list = []
-            remaining_col = self.select_column(remaining_cols)
-            select_num = self.generate_prob_list(total_consonant_no)
-            new_consonant_list.extend(self.select_from_column(remaining_col, select_num))
-            total_consonant_no = total_consonant_no - len(new_consonant_list)
+        new_consonant_list = {}
+        while total_consonant_no_remaining > 0:
+            # Only run remaining columns if 'spare' consonants are left.
+            remaining_cols = ['Stop', 'Fricative', 'Approximant', 'Tap/flap']
+            rn.shuffle(remaining_cols)
+            # Note the remaining columns and shuffle them so selection differs each time.
+            
+            for r in remaining_cols:
+                if total_consonant_no_remaining > 0:
+                    remaining_col = self.select_column(remaining_cols)
+                    select_num = self.generate_prob_list(total_consonant_no_remaining)
+                    new_consonants = self.select_from_column(remaining_col, select_num)
+                    # Select new consonants from the chosen column.
+                    print(new_consonants, len(new_consonants))
+                    new_consonant_list.update({r : new_consonants})
+                    total_consonant_no_remaining = total_consonant_no_remaining - len(new_consonants)
+        print('ok5', total_consonant_no_remaining)
+
+        new_consonant_list.update(liquid_consonants)
+        new_consonant_list.update({'Nasal': nasal_consonants})
+        print(new_consonant_list, total_consonant_no_remaining)
+        # print(liquid_consonants)
+
+        flat_list = [item for sublist in regular_list for item in sublist]
+        
         
 
     def select_column(self, column_list):
         """
-        Randomly choose a column.
+        Randomly choose a column from a dataframe.
         """
         selected_column_name = np.random.choice(column_list, replace=False)
         column_list.remove(selected_column_name)
