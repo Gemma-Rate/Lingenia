@@ -13,8 +13,8 @@ vindex = ['close','near-close','close-mid','mid','open-mid','near-open','open']
 
 vowel_df = pd.DataFrame(vowels, index=vindex)
 
-pulmonic_consonants = {'Bi­labial':[['\u006D\u0325', '\u006D'], ['\u0070','\u0062'],
-                                    ['\u0278', '\u03B2'], '', ['\u2C71\u031F'],
+pulmonic_consonants = {'Bi­labial':[['\u006D'], ['\u0070','\u0062'],
+                                    ['\u0278', '\u03B2'], '', '',
                                     ['\u0299'], '', ''],
                        'Labiodental':[['\u0271'], '',
                                       ['\u0066','\u0076'], ['\u028B'],

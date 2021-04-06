@@ -256,7 +256,7 @@ class Phonology(object):
         # Liquid consonants.
         print('ok4', len(liquid_consonants), liquid_num, total_liquid_col_nos, total_consonant_no_remaining)
 
-        new_consonant_list = {}
+        self.consonants = {}
         while total_consonant_no_remaining > 0:
             # Only run remaining columns if 'spare' consonants are left.
             remaining_cols = ['Stop', 'Fricative', 'Approximant', 'Tap/flap']
@@ -270,16 +270,17 @@ class Phonology(object):
                     new_consonants = self.select_from_column(remaining_col, select_num)
                     # Select new consonants from the chosen column.
                     print(new_consonants, len(new_consonants))
-                    new_consonant_list.update({r : new_consonants})
+                    self.consonants.update({r : new_consonants})
                     total_consonant_no_remaining = total_consonant_no_remaining - len(new_consonants)
         print('ok5', total_consonant_no_remaining)
 
-        new_consonant_list.update(liquid_consonants)
-        new_consonant_list.update({'Nasal': nasal_consonants})
-        print(new_consonant_list, total_consonant_no_remaining)
+        self.consonants.update(liquid_consonants)
+        self.consonants.update({'Nasal': nasal_consonants})
+        print(self.consonants, total_consonant_no_remaining)
         # print(liquid_consonants)
 
-        flat_list = [item for sublist in regular_list for item in sublist]
+        self.consonants_list = [item for sublist in self.consonants.values() for item in sublist]
+        print(self.consonants_list)
         
         
 
