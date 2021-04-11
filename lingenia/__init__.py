@@ -4,6 +4,7 @@ import flask as fk
 import os
 from lingenia import phonology_class as pc
 from lingenia import ipa_dict_simplified as ip
+from lingenia import phonotactics_class as pt
 
 def make_app(test_config=None):
 
@@ -24,6 +25,23 @@ def make_app(test_config=None):
     except OSError:
         pass
     # Create the instance folder if it doesn't exist already.
+
+    def encode_to_json(phoneme_list, phoneme_name):
+        """
+        Encode list contents and convert to a json for passing to ajax.
+        """
+        encoded = [str(a.encode('unicode_escape', 'backslashreplace')) for a in
+                   list(phoneme_list)]
+        phoneme_code = [s.replace("b'\\\\u'", '') for s in encoded]
+        phoneme_code = [s.replace("\\\\u", '') for s in phoneme_code]
+        phoneme_code = [s.replace("'", '').upper() for s in phoneme_code]
+        phoneme_str = ','.join(phoneme_code)
+        # Single string with all the vowels, to pass to ajax.
+
+        phoneme_json = {phoneme_name: phoneme_str}
+        print(phoneme_str)
+        
+        return phoneme_json
 
     @app.route('/lingenia')
     def main_page():
@@ -66,24 +84,16 @@ def make_app(test_config=None):
         # Generate phonology.
 
         vowel_list = phonology.vowels
-        consonant_list = phonology.consonants
+        consonant_list = phonology.consonants_list
         # Get vowels and consonants from phonology class. w
+        
+        vowel_json = encode_to_json(vowel_list, "vowels")
+        consonant_json = encode_to_json(consonant_list, "consonants")
+        # Get encoded results for JSON.
 
-        print(vowel_list, consonant_list)
-        encoded = [str(a.encode('unicode_escape', 'backslashreplace')) for a in
-                   list(vowel_list)]
-        vowel_code = [s.replace("b'\\\\u'", '') for s in encoded]
-        vowel_code = [s.replace("\\\\u", '') for s in vowel_code]
-        vowel_code = [s.replace("'", '').upper() for s in vowel_code]
-        vowel_str = ','.join(vowel_code)
-        # Single string with all the vowels, to pass to ajax.
+        phonotactics = pt.Syllable(consonant_list, vowel_list)
 
-        print(vowel_str)
-
-        vowel_json = {"vowels": vowel_str}
-        print(vowel_json)
-
-        return fk.render_template('main_page.html', vowel_json=vowel_json)
+        return fk.render_template('main_page.html', vowel_json=vowel_json, consonant_json=consonant_json)
        # return vowel_json
 
     return app
