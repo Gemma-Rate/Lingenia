@@ -2,6 +2,7 @@
 
 import flask as fk
 import os
+import json
 from lingenia import phonology_class as pc
 from lingenia import ipa_dict_simplified as ip
 from lingenia import phonotactics_class as pt
@@ -63,6 +64,11 @@ def make_app(test_config=None):
         Display the contact page.
         """
         return fk.render_template('contact.html')
+
+   # @app.route('/lingenia', methods = ['POST'])
+   # def get_post_javascript_data():
+    #    jsdata = fk.request.form['javascript_data']
+     #   return json.loads(jsdata)[0]
 
     @app.route('/lingenia', methods=['GET', 'POST'])
     def forms():
