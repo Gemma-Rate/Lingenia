@@ -74,7 +74,7 @@
 
         <div class="grid-item">
             <div class="vowels1">
-                <table style="width:75%">
+                <table style="width:75%" id="vowelsTable">
                 <tr>
                     <th> </th>
                     <th>Front</th>
@@ -83,7 +83,7 @@
                 </tr>
                 <tr>
                     <td><span id="cl" >Close</span></td>
-                    <td><button onclick="playAudio(this)" ondblclick="addOrRemove(this)" type="button" id="BI">&#x0069;
+                    <td><button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button" id="BI">&#x0069;
                             <audio>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/9/91/Close_front_unrounded_vowel.ogg"/> 
                             </audio>
@@ -762,7 +762,6 @@
             var vlist = v['vowels'].split(",");
             var i;
             for (i = 0; i < vlist.length; i++) {
-                console.log(vlist[i]);
                 document.getElementById(vlist[i]).style.color = "red";
              }
         </script>
@@ -775,38 +774,97 @@
             var clist = c['consonants'].split(",");
             var i;
             for (i = 0; i < clist.length; i++) {
-                console.log(clist[i]);
                 document.getElementById(clist[i]).style.color = "red";
              }
         </script>
         {% endif %}
 
         <script>
+
+
             // Play pronunciations on click. 
             function playAudio(ele) { 
                 var x = ele.getElementsByTagName("audio")[0];
                 x.play(); 
             } 
 
+            function checkForFlask(jsonName, colourHighlight) {
+
+                var exists = '{{'+jsonName+'}}';
+                console.log(exists);
+
+                if (exists) {
+                // Check if the variable is defined
+                    if (colourHighLight == 'red') {
+                        // Remove already highlighted phonemes from the json. 
+                        console.log(clist);
+                        console.log(vlist);
+
+                        // Remove from the list. 
+                    }
+                }
+            }
+
             function addOrRemove(ele) {
                 // Run when button in the grid is double clicked. 
-                
-                var id = ele.id;
-                JSON.parse('{{ consonant_json | tojson | safe}}');
 
-                for (i = 0; i < clist.length; i++) {
-                    console.log(clist[i]);
-                    selectedTextColour = document.getElementById(clist[i]).style.color;
-                    if (selectedTextColour == "red") {
-                        // If highlighted already, change text colour back to default and 
-                        // remove from the JSON.
-                        document.getElementById(clist[i]).style.color = "black";
-                    
+                var exists = '{{ consonant_json }}';
+
+                var id = ele.id;
+                selectedTextColour = document.getElementById(id).style.color;
+
+                if (selectedTextColour == "red") {
+                    // If highlighted already, change text colour back to default and 
+                    // remove from the JSON.
+                    document.getElementById(id).style.color = "black";
+
+                    if (exists){
+                        // Remove element from list if highlighting is removed.
+                        var c_id = clist.indexOf(id);
+                        var v_id = vlist.indexOf(id);
+                        
+                        if (c_id >= 0){
+                            removed = clist.splice(c_id+1, 1);
+                        }
+                        else if (v_id >=0){
+                            removed = vlist.splice(v_id, 1);
+                        }
                     }
-                    else {
-                        // If not yet highlighted
-                        document.getElementById(clist[i]).style.color = "red";
+                }
+                else if (selectedTextColour == "black") {
+                    // If not yet highlighted, then change text colour to red and add to JSON (if it exists).
+                    document.getElementById(id).style.color = "red";
+                    if (exists){
+                        // Determine whether to add to the vowel or consonant JSON:
+
+                        var vowelRows = document.getElementsByTagName("table")[0];
+                        // First table, on vowels.
+                        var vowelElement = vowelRows.getElementsByTagName("button").namedItem(id);
+                        console.log(vowelElement)
+                        if (vowelElement !== null) {
+                                // If id of current element is in the vowels grid, then it is a vowel. 
+                                vlist.push(id);
+                            }
+
+                        var consonantRows = document.getElementsByTagName("table")[1];
+                        // Second table, on consonants.
+                        var consonantElement = consonantRows.getElementsByTagName("button").namedItem(id);
+                        console.log(consonantElement)
+                        if (consonantElement !== null) {
+                                // If id of current element is in the vowels grid, then it is a vowel. 
+                                clist.push(id);
+                            }
+                        }
                     }
              }
-            }
+
+            //let data = {element: "barium"};
+
+            //fetch("/post/data/here", {
+            //method: "POST", 
+            //body: JSON.stringify(data)
+            //}).then(res => {
+            //console.log("Request complete! response:", res);
+            //});
+
         </script>
