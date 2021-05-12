@@ -44,19 +44,19 @@
 
         <div class="grid-item">
             <!data inputs>
-            <label id="vowel_no">Number of vowels:</label>
+            <label>Number of vowels:</label>
             <br>
-            <input type="text" name="vowel_no">
-            <button onclick="postData(5)" type="button" id="vowels_id">Generate vowels</button>
+            <input type="number" id="vowel_no">
         </div>
 
         <div class="grid-item">
             <!data inputs>
-            <form action="/lingenia" method="POST">
-                <label id="consonant_no">Number of consonants:</label><br>
-                <input type="text" name="consonant_no">
-                <input type="submit" value="Generate consonants" id="consonants_id">
-            </form>
+            <!form action="/lingenia" method="POST">
+            <label>Number of consonants:</label>
+            <br>
+            <input type="number" id="consonant_no">
+            <button onclick="postInputs('vowel_no','consonant_no')" type="button" class="submit" id="consonants_id">Generate vowels and consonants</button>
+            <!/form>
         </div>
 
         <div class="grid-item">
@@ -755,38 +755,48 @@
         
     </div>
 
-        {% if vowel_json %}
-        <script>
-            var v = JSON.parse('{{ vowel_json | tojson | safe}}');
-            var vlist = v['vowels'].split(",");
-            var i;
-            for (i = 0; i < vlist.length; i++) {
-                document.getElementById(vlist[i]).style.color = "red";
-             }
-        </script>
-        {% endif %}
-
-
-        {% if consonant_json %}
-        <script>
-            var c = JSON.parse('{{ consonant_json | tojson | safe}}');
-            var clist = c['consonants'].split(",");
-            var i;
-            for (i = 0; i < clist.length; i++) {
-                document.getElementById(clist[i]).style.color = "red";
-             }
-        </script>
-        {% endif %}
-
         <script>
 
-            function postData(data){
+            function postData(data, label){
                 let xhr = new XMLHttpRequest();
                 xhr.open("POST", '/lingenia', true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.send(JSON.stringify({
-                    "values": data
-                }));
+                var jsonObj = {}
+                jsonObj[label] = data
+                xhr.send(JSON.stringify(jsonObj));
+            }
+
+            function highlightLetters(jsonName, selectName){
+                //var jsonnput = "{{ " + jsonName + " | tojson | safe}}";
+                var j = JSON.parse(jsonName);
+                console.log(typeof j)
+                var jList = j[selectName].split(",");
+                console.log(jList)
+                var i;
+                for (i = 0; i < jList.length; i++) {
+                    document.getElementById(jList[i]).style.color = "red";
+                };
+            };
+
+            function postInputs(vowelInputId, consonantInputId){
+                var vowelData = document.getElementById(vowelInputId).valueAsNumber
+                var consonantData = document.getElementById(consonantInputId).valueAsNumber
+                // Get contents of the input box.
+                var dataList = [vowelData, consonantData]
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", '/lingenia', false);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                var jsonObj = {};
+                jsonObj["forms"] = dataList;
+
+                xhr.onload = function () {
+                    var outputJson = xhr.responseText;
+                    highlightLetters(outputJson, "vowel_json")
+                    highlightLetters(outputJson, "consonant_json")
+                };
+                xhr.send(JSON.stringify(jsonObj));
+
             }
 
             // Play pronunciations on click. 
@@ -795,14 +805,33 @@
                 x.play(); 
             } 
 
+            // Check if a letter is highlighted
+            function getHighlighted(nodesList) {
+                var highlightedList = [];
+                var i;
+                for (i = 0; i < nodesList.length; i++) {
+                    var node = nodesList[i];
+                    if (node.style.color == "red") {
+                        highlightedList.push(node.id)
+                    };
+                };
+                console.log(highlightedList)
+                return highlightedList
+            };
+            
+            // Run when button in the grid is double clicked. Add or subtract
+            // from the list of existing selected letters. 
             function addOrRemove(ele) {
-                // Run when button in the grid is double clicked.
-
-                var exists = '{{ consonant_json }}';
+                
+                var buttons = document.querySelectorAll("button");
+                var exists = getHighlighted(buttons)
 
                 var id = ele.id;
                 var selectedTextColour = document.getElementById(id).style.color;
                 console.log(selectedTextColour)
+
+                var vlist = []
+                var clist = []
 
                 if (selectedTextColour == "red") {
                     // If highlighted already, change text colour back to default and 
@@ -850,26 +879,9 @@
 
                 // POST
                 console.log('send')
-                postData(2)
-                //fetch('/listen', {
-                  //  headers: {
-                   // Content-Type': 'application/json'
-                   // },
-                    // Specify POST method to send from javascript to python.
-                   // method: 'POST',
+                postData(vlist, "v_list")
+                postData(clist, "c_list")
 
-                    //body: JSON.stringify({
-                    //    "test": "test send"
-                    //})
-                    //}).then(function (response) { 
-                    //return response.text();
-                    //}).then(function (text) {
-
-                    //console.log('POST response: ');
-
-                    // Should be 'OK' if everything was successful
-                //  console.log(text);
-                //});
              }
 
 
