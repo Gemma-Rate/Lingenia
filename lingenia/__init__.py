@@ -3,6 +3,8 @@
 import flask as fk
 import os
 import json
+
+from flask import g
 from lingenia import phonology_class as pc
 from lingenia import ipa_dict_simplified as ip
 from lingenia import phonotactics_class as pt
@@ -11,15 +13,17 @@ def make_app(test_config=None):
 
     app = fk.Flask(__name__, instance_relative_config=True)
     # Create and configure the app.
-    app.config.from_mapping(
-        SECRET_KEY='dev')
+    #'app.config.from_mapping(
+    #    SECRET_KEY='dev')
 
-    if test_config is None:
+    #if test_config is None:
         # load the instance config, if it exists, when not testing.
-        app.config.from_pyfile('config.py', silent=True)
-    else:
+     #   app.config.from_pyfile('config.py', silent=True)
+    #else:
         # load the test config if passed in
-        app.config.from_mapping(test_config)
+    #    app.config.from_mapping(test_config)
+
+    app.config['TEMPLATES_AUTO_RELOAD']=True
 
     try:
         os.makedirs(app.instance_path)
@@ -39,10 +43,10 @@ def make_app(test_config=None):
         phoneme_str = ','.join(phoneme_code)
         # Single string with all the vowels, to pass to ajax.
 
-        phoneme_json = {phoneme_name: phoneme_str}
+        #phoneme_json = {phoneme_name: phoneme_str}
         print(phoneme_str)
         
-        return phoneme_json
+        return phoneme_str
 
     @app.route('/lingenia', methods=['GET', 'POST'])
     def main_page():
@@ -50,10 +54,24 @@ def make_app(test_config=None):
         Display the main page with phoneme and language generation. Also accept incoming ajax requests from the main page. 
         """
         if fk.request.method == 'POST':
-            print('Incoming..')
-            print(fk.request.get_json())  
-            
-        return fk.render_template('main_page.html')
+            response = fk.request.get_json()
+            print(response)
+            keys = response.keys()
+    
+            if list(keys)[0] == 'forms':
+                vowel_no, consonant_no = response['forms']
+                vowel_json, consonant_json = forms(vowel_no, consonant_no)
+                print(vowel_json, consonant_json)
+                g.vowels = vowel_json
+                g.consonants = consonant_json
+                return fk.jsonify(vowel_json=vowel_json, consonant_json=consonant_json) 
+            else:
+                return fk.render_template('main_page.html')
+        else: 
+            return fk.render_template('main_page.html')
+
+        print('test', consonant_json, vowel_json)  
+         #, vowel_json=vowel_json, consonant_json=consonant_json)
 
     @app.route('/about')
     def about():
@@ -69,22 +87,7 @@ def make_app(test_config=None):
         """
         return fk.render_template('contact.html')
 
-   # @app.route('/lingenia', methods = ['POST'])
-    #def listener():
-    #    if fk.request.method == 'POST':
-    #        print('Incoming..')
-    #        print(fk.request.get_json())
-   #         return '', 200 
-   # def get_post_javascript_data():
-    #    jsdata = fk.request.form['javascript_data']
-     #   return json.loads(jsdata)[0]
-
-    @app.route('/lingenia', methods=['GET', 'POST'])
-    def forms():
-
-        vowel_no = fk.request.get_json('vowel_no')
-        consonant_no = fk.request.get_json('consonant_no')
-        # Get vowel and consnants form. 
+    def forms(vowel_no, consonant_no):
 
         if not vowel_no:
             # Replace with constant if no vowel is specified.
@@ -108,8 +111,7 @@ def make_app(test_config=None):
 
         phonotactics = pt.Syllable(consonant_list, vowel_list)
 
-        return fk.render_template('main_page.html', vowel_json=vowel_json, consonant_json=consonant_json)
+        return vowel_json, consonant_json
         # return vowel_json
 
     return app
-#<script src="{{ url_for('static', filename='main_script.js') }}"></script>
