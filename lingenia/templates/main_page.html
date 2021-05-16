@@ -807,16 +807,39 @@
 
             // Check if a letter is highlighted
             function getHighlighted(nodesList) {
-                var highlightedList = [];
+                var vlist = [];
+                var clist = [];
+                var allData =[vlist, clist];
                 var i;
                 for (i = 0; i < nodesList.length; i++) {
                     var node = nodesList[i];
                     if (node.style.color == "red") {
-                        highlightedList.push(node.id)
+                        allData = addToList(allData[0], allData[1], node.id);
                     };
                 };
-                console.log(highlightedList)
-                return highlightedList
+                return allData
+            };
+
+            // Determine whether to add to the vowel or consonant JSON:
+            function addToList(vlist, clist, id) {                     
+                var vowelRows = document.getElementsByTagName("table")[0];
+                // First table, on vowels.
+                var vowelElement = vowelRows.getElementsByTagName("button").namedItem(id);
+
+                if (vowelElement !== null) {
+                        // If id of current element is in the vowels grid, then it is a vowel. 
+                        vlist.push(id);
+                    }
+
+                var consonantRows = document.getElementsByTagName("table")[1];
+                // Second table, on consonants.
+                var consonantElement = consonantRows.getElementsByTagName("button").namedItem(id);
+
+                if (consonantElement !== null) {
+                        // If id of current element is in the vowels grid, then it is a vowel. 
+                        clist.push(id);
+                };
+                return [vlist, clist]
             };
             
             // Run when button in the grid is double clicked. Add or subtract
@@ -824,14 +847,13 @@
             function addOrRemove(ele) {
                 
                 var buttons = document.querySelectorAll("button");
-                var exists = getHighlighted(buttons)
+                var exists = getHighlighted(buttons);
+                var vlist = exists[0];
+                var clist = exists[1];
 
                 var id = ele.id;
                 var selectedTextColour = document.getElementById(id).style.color;
                 console.log(selectedTextColour)
-
-                var vlist = []
-                var clist = []
 
                 if (selectedTextColour == "red") {
                     // If highlighted already, change text colour back to default and 
@@ -855,34 +877,18 @@
                     // If not yet highlighted, then change text colour to red and add to JSON (if it exists).
                     document.getElementById(id).style.color = "red";
                     if (exists){
-                        // Determine whether to add to the vowel or consonant JSON:
-
-                        var vowelRows = document.getElementsByTagName("table")[0];
-                        // First table, on vowels.
-                        var vowelElement = vowelRows.getElementsByTagName("button").namedItem(id);
-
-                        if (vowelElement !== null) {
-                                // If id of current element is in the vowels grid, then it is a vowel. 
-                                vlist.push(id);
-                            }
-
-                        var consonantRows = document.getElementsByTagName("table")[1];
-                        // Second table, on consonants.
-                        var consonantElement = consonantRows.getElementsByTagName("button").namedItem(id);
-
-                        if (consonantElement !== null) {
-                                // If id of current element is in the vowels grid, then it is a vowel. 
-                                clist.push(id);
-                        }
-                    }
-                }
+                        exists = addToList(vlist, clist, id)
+                        vlist = exists[0];
+                        clist = exists[1];
+                        };
+                    };
 
                 // POST
                 console.log('send')
                 postData(vlist, "v_list")
                 postData(clist, "c_list")
 
-             }
+             };
 
 
 
