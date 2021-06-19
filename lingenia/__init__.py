@@ -22,7 +22,7 @@ def make_app(test_config=None):
         pass
     # Create the instance folder if it doesn't exist already.
 
-    def encode_to_json(phoneme_list, phoneme_name):
+    def encode_to_json(phoneme_list):
         """
         Encode list contents and convert to a json for passing to ajax.
         """
@@ -35,8 +35,7 @@ def make_app(test_config=None):
         # Single string with all the vowels, to pass to ajax.
 
         #phoneme_json = {phoneme_name: phoneme_str}
-        print(phoneme_str)
-        
+        #print(phoneme_str)
         return phoneme_str
 
     @app.route('/lingenia', methods=['GET', 'POST'])
@@ -46,22 +45,23 @@ def make_app(test_config=None):
         """
         if fk.request.method == 'POST':
             response = fk.request.get_json()
-            print(response)
             keys = response.keys()
-    
+            print(response)
+
             if list(keys)[0] == 'forms':
                 vowel_no, consonant_no = response['forms']
                 vowel_json, consonant_json = forms(vowel_no, consonant_no)
-                print(vowel_json, consonant_json)
                 g.vowels = vowel_json
                 g.consonants = consonant_json
+                classify_phonemes(vowel_json, consonant_json)
+
                 return fk.jsonify(vowel_json=vowel_json, consonant_json=consonant_json) 
             else:
+                classify_phonemes(','.join(response['v_list']), ','.join(response['c_list']))
                 return fk.render_template('main_page.html')
         else: 
             return fk.render_template('main_page.html')
 
-        print('test', consonant_json, vowel_json)  
          #, vowel_json=vowel_json, consonant_json=consonant_json)
 
     @app.route('/about')
@@ -96,13 +96,48 @@ def make_app(test_config=None):
         consonant_list = phonology.consonants_list
         # Get vowels and consonants from phonology class. w
         
-        vowel_json = encode_to_json(vowel_list, "vowels")
-        consonant_json = encode_to_json(consonant_list, "consonants")
+        vowel_json = encode_to_json(vowel_list)
+        consonant_json = encode_to_json(consonant_list)
         # Get encoded results for JSON.
 
         phonotactics = pt.Syllable(consonant_list, vowel_list)
 
         return vowel_json, consonant_json
         # return vowel_json
+
+    def classify_phonemes(vowels, consonants):
+        """
+        Classify the selected phonemes from the UI.
+        """
+        df_class = {}
+        vowels = vowels.split(',')
+        consonants = consonants.split(',')
+        keys = vowels+consonants
+
+        ip_vowels = ip.vowel_df
+        vowel_keys = ip_vowels.index.values
+        for index, row in ip_vowels.iterrows():
+            rowlist = row.to_numpy().tolist()
+            flattened = [encode_to_json(item) for slist in rowlist for item in slist]
+            for f in flattened:
+                df_class[f] = index
+
+        ip_consonants = ip.consonant_df
+        consonant_keys = ip_consonants.index.values
+        for index, row in ip_consonants.iterrows():
+            rowlist = row.to_numpy().tolist()
+            flattened = [encode_to_json(item) for slist in rowlist for item in slist]
+            for f in flattened:
+                df_class[f] = index
+        
+        all_keys = list(consonant_keys)+list(vowel_keys)
+
+        df_vowels = {ak:[] for ak in all_keys} 
+
+        for k in keys:
+            key_for_vowels = df_class[k]
+            df_vowels[key_for_vowels].append(k)
+            print(k, df_class[k], df_vowels)
+
 
     return app

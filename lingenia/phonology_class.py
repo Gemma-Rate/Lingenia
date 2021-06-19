@@ -254,9 +254,7 @@ class Phonology(object):
         # Remove the liquid and nasal from the ipa dictionary. 
         all_consonants = ip.consonant_df
         drop_cols = liquid_cols + ['Nasal']
-        print(drop_cols)
         all_consonants = all_consonants.drop(labels=drop_cols)
-        print(all_consonants)
 
         self.consonants = {}
         while total_consonant_no_remaining > 0:
@@ -280,7 +278,6 @@ class Phonology(object):
         self.consonants.update(liquid_consonants)
         self.consonants.update({'Nasal': nasal_consonants})
         self.consonants_list = [item for sublist in self.consonants.values() for item in sublist]
-        print(self.consonants_list)
 
 
     def select_column(self, column_list):
@@ -293,4 +290,6 @@ class Phonology(object):
         selected_col = self.generate_consonant_row(selected_column_name)
 
         return selected_col
+
+        
 

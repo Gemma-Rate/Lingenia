@@ -450,7 +450,7 @@
                 <tr>
                     <td>Trill</td>
                     <td>
-                        <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button" id="" >&#665;
+                        <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button" id="B0299" >&#665;
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Bilabial_trill.ogg" />
                             </audio>
@@ -762,7 +762,9 @@
                 xhr.open("POST", '/lingenia', true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 var jsonObj = {}
-                jsonObj[label] = data
+                for (i = 0; i < label.length; i++){
+                jsonObj[label[i]] = data[i]
+                }
                 xhr.send(JSON.stringify(jsonObj));
             }
 
@@ -885,8 +887,7 @@
 
                 // POST
                 console.log('send')
-                postData(vlist, "v_list")
-                postData(clist, "c_list")
+                postData([vlist, clist], ["v_list", "c_list"])
 
              };
 
