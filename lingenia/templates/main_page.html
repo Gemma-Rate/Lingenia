@@ -752,6 +752,8 @@
                 </table>
             </div>
         </div>
+
+        Generate words:
         
     </div>
 
@@ -766,6 +768,19 @@
                 jsonObj[label[i]] = data[i]
                 }
                 xhr.send(JSON.stringify(jsonObj));
+            }
+
+            function eraseAllHighlighting(){
+                // Cycle through all elements of the verb and consonant tables. 
+                // If highlighted already, change text colour back to default.
+                var buttons = document.querySelectorAll("button");
+                for (i = 0; i < buttons.length; i++) {
+                    var node = buttons[i];
+                    if (node.style.color == "red") {
+                        node.style.color = "black";
+                    };
+                };
+                console.log("erasing")
             }
 
             function highlightLetters(jsonName, selectName){
@@ -783,8 +798,11 @@
             function postInputs(vowelInputId, consonantInputId){
                 var vowelData = document.getElementById(vowelInputId).valueAsNumber
                 var consonantData = document.getElementById(consonantInputId).valueAsNumber
-                // Get contents of the input box.
+                // Get content and vowle numbers of the input box.
                 var dataList = [vowelData, consonantData]
+
+                eraseAllHighlighting()
+                // Erase existing highlighted text.
 
                 let xhr = new XMLHttpRequest();
                 xhr.open("POST", '/lingenia', false);
@@ -863,7 +881,7 @@
                     document.getElementById(id).style.color = "black";
 
                     if (exists){
-                        // Remove element from list if highlighting is removed.
+                        // Remove element from list of all phonemes if highlighting is removed.
                         var c_id = clist.indexOf(id);
                         var v_id = vlist.indexOf(id);
                         

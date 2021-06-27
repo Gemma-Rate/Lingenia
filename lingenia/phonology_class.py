@@ -116,7 +116,7 @@ class Phonology(object):
 
     def determing_voiced(self, col, probabilities):
         """
-        Randomly choose for voiced data.
+        Randomly choose voiced data.
         """
         consonant_voice_list = []
         voiceless = col[0]
@@ -157,8 +157,6 @@ class Phonology(object):
     def select_from_column(self, col_data, sel_consonant_number):
         """
         Select from the consonant column.
-        :param col_data:
-        :return:
         """
         consonant_phoible_data = pd.DataFrame(pcs.phoible_consonants)
         decoded = [bytes(a, 'utf-8').decode("unicode_escape") for a in

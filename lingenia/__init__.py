@@ -46,18 +46,22 @@ def make_app(test_config=None):
         if fk.request.method == 'POST':
             response = fk.request.get_json()
             keys = response.keys()
-            print(response)
 
             if list(keys)[0] == 'forms':
                 vowel_no, consonant_no = response['forms']
                 vowel_json, consonant_json = forms(vowel_no, consonant_no)
                 g.vowels = vowel_json
                 g.consonants = consonant_json
-                classify_phonemes(vowel_json, consonant_json)
+                classified = classify_phonemes(vowel_json, consonant_json)
+                Syllables = pt.Syllable(classified)
+                Syllables.syllable_structure()
 
                 return fk.jsonify(vowel_json=vowel_json, consonant_json=consonant_json) 
             else:
-                classify_phonemes(','.join(response['v_list']), ','.join(response['c_list']))
+                classified = classify_phonemes(','.join(response['v_list']), ','.join(response['c_list']))
+                Syllables = pt.Syllable(classified)
+                Syllables.syllable_structure()
+
                 return fk.render_template('main_page.html')
         else: 
             return fk.render_template('main_page.html')
@@ -94,13 +98,12 @@ def make_app(test_config=None):
 
         vowel_list = phonology.vowels
         consonant_list = phonology.consonants_list
-        # Get vowels and consonants from phonology class. w
+        # Get vowels and consonants from phonology class. 
+        print(vowel_list, consonant_list)
         
         vowel_json = encode_to_json(vowel_list)
         consonant_json = encode_to_json(consonant_list)
         # Get encoded results for JSON.
-
-        phonotactics = pt.Syllable(consonant_list, vowel_list)
 
         return vowel_json, consonant_json
         # return vowel_json
@@ -132,12 +135,16 @@ def make_app(test_config=None):
         
         all_keys = list(consonant_keys)+list(vowel_keys)
 
-        df_vowels = {ak:[] for ak in all_keys} 
+        df_keys = {ak:[] for ak in all_keys} 
+        # Create empty lists to fill for each type of phonemes. 
 
         for k in keys:
-            key_for_vowels = df_class[k]
-            df_vowels[key_for_vowels].append(k)
-            print(k, df_class[k], df_vowels)
+            try:
+                key_for_all = df_class[k]
+                df_keys[key_for_all].append(k)
+            except KeyError:
+                pass
 
+        return df_keys
 
     return app
