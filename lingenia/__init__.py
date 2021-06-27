@@ -46,21 +46,25 @@ def make_app(test_config=None):
         if fk.request.method == 'POST':
             response = fk.request.get_json()
             keys = response.keys()
+            print(keys)
 
-            if list(keys)[0] == 'forms':
-                vowel_no, consonant_no = response['forms']
+            if list(keys)[0] == 'vowels_and_consonants':
+                vowel_no, consonant_no = response['vowels_and_consonants']
                 vowel_json, consonant_json = forms(vowel_no, consonant_no)
                 g.vowels = vowel_json
                 g.consonants = consonant_json
                 classified = classify_phonemes(vowel_json, consonant_json)
-                Syllables = pt.Syllable(classified)
-                Syllables.syllable_structure()
-
                 return fk.jsonify(vowel_json=vowel_json, consonant_json=consonant_json) 
-            else:
+
+            elif list(keys)[0] == 'Number_words':
                 classified = classify_phonemes(','.join(response['v_list']), ','.join(response['c_list']))
                 Syllables = pt.Syllable(classified)
-                Syllables.syllable_structure()
+                output_word_list = Syllables.syllable_structure() 
+                   
+                return fk.render_template('main_page.html')
+
+            else:
+                classified = classify_phonemes(','.join(response['v_list']), ','.join(response['c_list']))
 
                 return fk.render_template('main_page.html')
         else: 

@@ -57,21 +57,22 @@ class Syllable(object):
                 available_phoneme_classes.append((keynum, s))
         self.available_phoneme_classes = dict(available_phoneme_classes)
 
-    def syllable_structure(self):
+    def syllable_structure(self, nuclei_no=3):
         """Generate the basic syllable structure"""
-        print(self.available_phoneme_classes.keys())
         phoneme_keys = list(self.available_phoneme_classes.keys())
         self.min_number = np.min(list(self.available_phoneme_classes.keys()))
         self.max_number = np.max(list(self.available_phoneme_classes.keys()))
 
-        self.generate_onset()
-        print(self.onset)
-        for i in range(3):
-            self.generate_nucleus()
-            print(self.nucleus)
-        self.generate_coda()
+        output_word_list = []
+        
+        onset, onset_sonority_number = self.generate_onset()
+        output_word_list.append(onset)
+        for i in range(nuclei_no):
+            nucleus, nucleus_sonority_number = self.generate_nucleus(onset_sonority_number)
+            output_word_list.append(nucleus_sonority_number)
+        output_word_list.append(self.generate_coda(nucleus_sonority_number))
 
-        print(self.coda)
+        return output_word_list
 
     def check_equivalent_afficates(self):
         """
@@ -84,35 +85,71 @@ class Syllable(object):
     def generate_onset(self):
         """Determine which sounds can comprise the onset"""
         # generate start sonority
-        self.onset_sonority_number = rn.choice(list(self.available_phoneme_classes.keys()))
-        self.onset_sonority = self.available_phoneme_classes[self.onset_sonority_number]
-        extracted_keys = self.all_phonemes[self.onset_sonority]
-        self.onset = np.random.choice(extracted_keys)
+        onset_sonority_number = rn.choice(list(self.available_phoneme_classes.keys()))
+        onset_sonority = self.available_phoneme_classes[onset_sonority_number]
+        extracted_keys = self.all_phonemes[onset_sonority]
+        onset = np.random.choice(extracted_keys)
+
+        return onset, onset_sonority_number
         
 
-    def generate_nucleus(self):
+    def generate_nucleus(self, onset_sonority_number):
         """Determine which sounds can comprise the nucleus"""
         #generate sonority with higher level at higher probability than the onset sonority
         phoneme_nos = np.array(list(self.available_phoneme_classes.keys()))
-        phoneme_nos = phoneme_nos[phoneme_nos>self.onset_sonority_number]
+        phoneme_nos = phoneme_nos[phoneme_nos>onset_sonority_number]
         # Get only phoneme number categories larger than the onset. 
-        self.nucleus_sonority_number = rn.choice(list(phoneme_nos))
-        self.nucleus_sonority = self.available_phoneme_classes[self.nucleus_sonority_number]
-        extracted_keys = self.all_phonemes[self.nucleus_sonority]
-        self.nucleus = np.random.choice(extracted_keys)
+        nucleus_sonority_number = rn.choice(list(phoneme_nos))
+        nucleus_sonority = self.available_phoneme_classes[nucleus_sonority_number]
+        extracted_keys = self.all_phonemes[nucleus_sonority]
+        nucleus = np.random.choice(extracted_keys)
 
-    def generate_coda(self):
+        return nucleus, nucleus_sonority_number
+
+    def generate_coda(self, nucleus_sonority_number):
         """Generate the coda"""
         phoneme_nos = np.array(list(self.available_phoneme_classes.keys()))
-        phoneme_nos = phoneme_nos[phoneme_nos<self.nucleus_sonority_number]
+        phoneme_nos = phoneme_nos[phoneme_nos<nucleus_sonority_number]
         # Get only phoneme number categories larger than the onset. 
-        self.coda_sonority_number = rn.choice(list(phoneme_nos))
-        self.coda_sonority = self.available_phoneme_classes[self.coda_sonority_number]
-        extracted_keys = self.all_phonemes[self.coda_sonority]
-        self.coda = np.random.choice(extracted_keys)
+        coda_sonority_number = rn.choice(list(phoneme_nos))
+        coda_sonority = self.available_phoneme_classes[coda_sonority_number]
+        extracted_keys = self.all_phonemes[coda_sonority]
+        coda = np.random.choice(extracted_keys)
+
+        return coda
 
     def insert_phonemes(self):
         pass
+
+    def convert_to_decimal_encoding(syllable_list):
+        """
+        Convert the html selected and reordered 
+        values to html decimals for display
+        """
+        convert_decimal = {"BI":"&#x0069", "BY":"&#x0079",
+                           "B0268":"&#x0268", "B0289":"&#x0289",
+                           "B026F":"&#x026F", "BU":"&#x0075",
+                           "B026A":"&#x026A", "B028F":"&#x028F",
+                           "B028A":"&#x028A", "BE":"&#x0065",
+                           "B\\XF8":"&#x00F8", "B0258":"&#x0258",
+                           "B0275":"&#x0275", "B0264":"&#x0264",
+                           "BO":"&#x006F", "B\\X65031E":"&#x0065;&#x031E",
+                           "B\\XF8031E":"&#x00F8;&#x031E", "B0259":"&#x0259",
+                           "B0264\\U031E":"&#x0264;&#x031E", "BO031E":"&#x006F;&#x031E",
+                           "B025B":"&#x025B", "B0153":"&#x0153",
+                           "B025C":"&#x025C", "B025E":"&#x025E",
+                           "B028C":"&#x028C", "B0254":"&#x0254",
+                           "B\\XE6":"&#x00E6", "B0250":"&#x0250",
+                           "BA":"&#x0061", "B0276":"&#x0276",
+                           "BA0308":"&#x0061;&#x0308", "B0251":"&#x0251",
+                           "B0252":"&#x0252"}
+        converted_syllable_list = []
+        for s in syllable_list:
+            converted_syllable_list.append(s)
+        joined = ';'.join(converted_syllable_list)
+
+        return joined
+
 
 class Words(object):
     """

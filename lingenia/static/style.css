@@ -36,14 +36,13 @@ a {
 
 th td {
   text-align: left;
-  padding: 30px;
+  padding: 10px;
   font-size: 20px;
 }
 
 table {
   border: 3px solid black;
   border-collapse: collapse;
-  padding: 30px;
   font-size: 20px;
 }
 
@@ -75,6 +74,35 @@ input {
   font-size: 20px;
   }
 
+.grid-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: auto auto;
+    grid-gap: 10px;
+}
+
+.word-input-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: auto auto;
+  grid-gap: 10px;
+}
+
 audio {
- width: 50px;
-}​
+  display: none;
+ }
+
+button {
+  background: transparent;
+  font-size: 20px;
+  border: none !important;
+}
+
+.submit {
+  background: grey; 
+  color: black; 
+  border: black;
+  padding: 10px;
+}

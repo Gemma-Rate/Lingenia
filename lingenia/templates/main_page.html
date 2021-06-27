@@ -40,6 +40,8 @@
         <!p is a paragraph>
     </section>
 
+    Generate phonemes:
+
     <div class="grid-container">
 
         <div class="grid-item">
@@ -752,12 +754,37 @@
                 </table>
             </div>
         </div>
-
-        Generate words:
         
     </div>
 
-        <script>
+    Generate words:
+
+    <div class="word-input-container">
+
+        <div class="grid-item">
+            <label>Number of words to generate:</label>
+            <br>
+            <input type="number" id="word_no">
+        </div>
+        <div class="grid-item">
+            <label>Minimum word length:</label>
+            <br>
+            <input type="number" id="word_length_min">
+        </div>
+        <div class="grid-item">
+            <label>Maximum word length:</label>
+            <br>
+            <input type="number" id="word_length_max">
+        </div>
+        <div class="grid-item">
+            <br>
+            <button onclick="sendHighlightedForWords(['word_no', 'word_length_min', 'word_length_max'],
+                                ['Number_words', 'Min_length', 'Max_length'])" 
+                                type="button" class="submit" id="consonants_id">Generate</button>
+        </div>
+    </div>
+
+    <script>
 
             function postData(data, label){
                 let xhr = new XMLHttpRequest();
@@ -768,6 +795,13 @@
                 jsonObj[label[i]] = data[i]
                 }
                 xhr.send(JSON.stringify(jsonObj));
+            }
+
+            function sendHighlightedForWords(data, labels){
+                // Get only currently highlighted data and send it back to the server. 
+                var buttons = document.querySelectorAll("button");
+                var exists = getHighlighted(buttons);
+                postData(data.concat(exists), labels.concat(['v_list', 'c_list']));
             }
 
             function eraseAllHighlighting(){
@@ -808,7 +842,7 @@
                 xhr.open("POST", '/lingenia', false);
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 var jsonObj = {};
-                jsonObj["forms"] = dataList;
+                jsonObj["vowels_and_consonants"] = dataList;
 
                 xhr.onload = function () {
                     var outputJson = xhr.responseText;
@@ -873,7 +907,6 @@
 
                 var id = ele.id;
                 var selectedTextColour = document.getElementById(id).style.color;
-                console.log(selectedTextColour)
 
                 if (selectedTextColour == "red") {
                     // If highlighted already, change text colour back to default and 
