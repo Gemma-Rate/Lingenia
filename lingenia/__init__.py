@@ -46,9 +46,9 @@ def make_app(test_config=None):
         if fk.request.method == 'POST':
             response = fk.request.get_json()
             keys = response.keys()
-            print(keys)
 
             if list(keys)[0] == 'vowels_and_consonants':
+                # Vowel and consonant numbers. 
                 vowel_no, consonant_no = response['vowels_and_consonants']
                 vowel_json, consonant_json = forms(vowel_no, consonant_no)
                 g.vowels = vowel_json
@@ -57,11 +57,18 @@ def make_app(test_config=None):
                 return fk.jsonify(vowel_json=vowel_json, consonant_json=consonant_json) 
 
             elif list(keys)[0] == 'Number_words':
+                # Number of words to generates, maximum and minimum length.
                 classified = classify_phonemes(','.join(response['v_list']), ','.join(response['c_list']))
                 Syllables = pt.Syllable(classified)
-                output_word_list = Syllables.syllable_structure() 
+                Syllables.generate_syllables(150)
+                converted = []
+                for i in Syllables.all_syllables:
+                    converted.append(pt.convert_to_decimal_encoding(i))
+
+                Words_list = pt.Words(converted)
+                Words_list.generate_word()
                    
-                return fk.render_template('main_page.html')
+                return fk.jsonify(generated_words=Words_list.all_words)
 
             else:
                 classified = classify_phonemes(','.join(response['v_list']), ','.join(response['c_list']))
@@ -69,8 +76,6 @@ def make_app(test_config=None):
                 return fk.render_template('main_page.html')
         else: 
             return fk.render_template('main_page.html')
-
-         #, vowel_json=vowel_json, consonant_json=consonant_json)
 
     @app.route('/about')
     def about():

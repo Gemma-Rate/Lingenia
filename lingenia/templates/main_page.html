@@ -782,6 +782,11 @@
                                 ['Number_words', 'Min_length', 'Max_length'])" 
                                 type="button" class="submit" id="consonants_id">Generate</button>
         </div>
+
+    </div>
+    
+    <div id="new-words">
+
     </div>
 
     <script>
@@ -801,7 +806,28 @@
                 // Get only currently highlighted data and send it back to the server. 
                 var buttons = document.querySelectorAll("button");
                 var exists = getHighlighted(buttons);
-                postData(data.concat(exists), labels.concat(['v_list', 'c_list']));
+                labels = labels.concat(['v_list', 'c_list']);
+                data = data.concat(exists);
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", '/lingenia', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                var jsonObj = {}
+                for (i = 0; i < labels.length; i++){
+                    jsonObj[labels[i]] = data[i]
+                };
+                
+                xhr.send(JSON.stringify(jsonObj));
+                xhr.onload = function () {
+                    var wordsJson = xhr.responseText;
+                    var words = JSON.parse(wordsJson);
+                    for (j = 0; j < words['generated_words'].length; j++){
+                        var newP = document.createElement("p");
+                        newP.innerHTML = words['generated_words'][j];
+                        document.getElementById("new-words").appendChild(newP);
+                    //document.getElementById("new-words").innerHTML = words['generated_words'];
+                    };
+                };
             }
 
             function eraseAllHighlighting(){

@@ -3,10 +3,12 @@
 import numpy as np
 import random as rn
 import pandas as pd
+from numpy.random import choice
 
 from lingenia import ipa_dict_simplified as ip
 from lingenia import phoible_vowels_dict as pv
 from lingenia import phoible_consonants_dict as pcs
+from lingenia import html_dict as htm
 
 class Syllable(object):
     """
@@ -40,39 +42,45 @@ class Syllable(object):
     def __init__(self, all_phonemes_classified):
 
         self.all_phonemes = all_phonemes_classified
-        self.onset = ''
+        self.all_syllables = []
+
         self.sonority_sequence = {'Open':15, 'Near-open':14, 'Open-mid':13, 
                                   'Mid':12, 'Close-mid':11, 'Near-close':10, 
                                   'Close':9, 'Trill':8, 'Approximant':7, 
                                   'Lateral fricative':6, 
                                   'Lateral approximant':5, 'Nasal':4, 
                                   'Fricative':3, 'Stop':2, 'Tap/flap':1}
-        #{7:'Open', 6:'Near-open', 5:'Open-mid',  4:'Mid', 3:'Close-mid', 2:'Near-close', 1:'Close', 0:'Trill', -1:'Lateral fricative', -2:'Lateral approximant', -3:'Nasal',  -4:'Fricative', -5:'Plosive'}
         available_phoneme_classes = []
-        # Set up a list of available phoneme classes to select.
+        # Set up a list of available phonemes to select.
 
         for s in all_phonemes_classified.keys():
             if len(all_phonemes_classified[s])>0:
                 keynum = self.sonority_sequence[s]
                 available_phoneme_classes.append((keynum, s))
         self.available_phoneme_classes = dict(available_phoneme_classes)
+        # Mapping between generated phonemes and numbers.
 
-    def syllable_structure(self, nuclei_no=3):
-        """Generate the basic syllable structure"""
+    def generate_syllables(self, number_of_syllables_to_gen):
+        """Generate a number of syllables to use for constructing words"""
+        for i in range(number_of_syllables_to_gen):
+            syllable_generated = self.syllable_structure()
+            self.all_syllables.append(syllable_generated)
+
+    def syllable_structure(self):
+        """Generate a basic syllable structure"""
         phoneme_keys = list(self.available_phoneme_classes.keys())
         self.min_number = np.min(list(self.available_phoneme_classes.keys()))
         self.max_number = np.max(list(self.available_phoneme_classes.keys()))
 
-        output_word_list = []
+        output_syllable = []
         
         onset, onset_sonority_number = self.generate_onset()
-        output_word_list.append(onset)
-        for i in range(nuclei_no):
-            nucleus, nucleus_sonority_number = self.generate_nucleus(onset_sonority_number)
-            output_word_list.append(nucleus_sonority_number)
-        output_word_list.append(self.generate_coda(nucleus_sonority_number))
+        output_syllable.append(onset)
+        nucleus, nucleus_sonority_number = self.generate_nucleus(onset_sonority_number)
+        output_syllable.append(nucleus)
+        output_syllable.append(self.generate_coda(nucleus_sonority_number))
 
-        return output_word_list
+        return output_syllable
 
     def check_equivalent_afficates(self):
         """
@@ -84,15 +92,16 @@ class Syllable(object):
 
     def generate_onset(self):
         """Determine which sounds can comprise the onset"""
-        # generate start sonority
-        onset_sonority_number = rn.choice(list(self.available_phoneme_classes.keys()))
+        phoneme_list = list(self.available_phoneme_classes.keys())[:-2]
+        # Select to almost end of list (to prevent errors from needing 
+        # to select higher sonority).
+        onset_sonority_number = rn.choice(phoneme_list)
         onset_sonority = self.available_phoneme_classes[onset_sonority_number]
         extracted_keys = self.all_phonemes[onset_sonority]
-        onset = np.random.choice(extracted_keys)
+        onset = rn.choice(extracted_keys)
 
         return onset, onset_sonority_number
         
-
     def generate_nucleus(self, onset_sonority_number):
         """Determine which sounds can comprise the nucleus"""
         #generate sonority with higher level at higher probability than the onset sonority
@@ -102,7 +111,7 @@ class Syllable(object):
         nucleus_sonority_number = rn.choice(list(phoneme_nos))
         nucleus_sonority = self.available_phoneme_classes[nucleus_sonority_number]
         extracted_keys = self.all_phonemes[nucleus_sonority]
-        nucleus = np.random.choice(extracted_keys)
+        nucleus = rn.choice(extracted_keys)
 
         return nucleus, nucleus_sonority_number
 
@@ -114,45 +123,51 @@ class Syllable(object):
         coda_sonority_number = rn.choice(list(phoneme_nos))
         coda_sonority = self.available_phoneme_classes[coda_sonority_number]
         extracted_keys = self.all_phonemes[coda_sonority]
-        coda = np.random.choice(extracted_keys)
+        coda = rn.choice(extracted_keys)
 
         return coda
-
-    def insert_phonemes(self):
-        pass
-
-    def convert_to_decimal_encoding(syllable_list):
-        """
-        Convert the html selected and reordered 
-        values to html decimals for display
-        """
-        convert_decimal = {"BI":"&#x0069", "BY":"&#x0079",
-                           "B0268":"&#x0268", "B0289":"&#x0289",
-                           "B026F":"&#x026F", "BU":"&#x0075",
-                           "B026A":"&#x026A", "B028F":"&#x028F",
-                           "B028A":"&#x028A", "BE":"&#x0065",
-                           "B\\XF8":"&#x00F8", "B0258":"&#x0258",
-                           "B0275":"&#x0275", "B0264":"&#x0264",
-                           "BO":"&#x006F", "B\\X65031E":"&#x0065;&#x031E",
-                           "B\\XF8031E":"&#x00F8;&#x031E", "B0259":"&#x0259",
-                           "B0264\\U031E":"&#x0264;&#x031E", "BO031E":"&#x006F;&#x031E",
-                           "B025B":"&#x025B", "B0153":"&#x0153",
-                           "B025C":"&#x025C", "B025E":"&#x025E",
-                           "B028C":"&#x028C", "B0254":"&#x0254",
-                           "B\\XE6":"&#x00E6", "B0250":"&#x0250",
-                           "BA":"&#x0061", "B0276":"&#x0276",
-                           "BA0308":"&#x0061;&#x0308", "B0251":"&#x0251",
-                           "B0252":"&#x0252"}
-        converted_syllable_list = []
-        for s in syllable_list:
-            converted_syllable_list.append(s)
-        joined = ';'.join(converted_syllable_list)
-
-        return joined
-
 
 class Words(object):
     """
     Stich syllables together into full words.
     """
-    pass
+    def __init__(self, all_syllables):
+
+        self.syllables = all_syllables
+        self.all_words = []
+
+        self.sprobability_distribution = [0.2, 0.5, 0.2, 0.1]
+        # Syllable number probability distribution.
+
+
+    def generate_word(self):
+        """Generate a single word """
+        total_syllable_no = np.random.choice(list(range(1, 5)), 1,
+                            p=self.sprobability_distribution)
+        total_syllable_no = total_syllable_no[0]
+        print(total_syllable_no)
+
+        word_list = []
+
+        for t in range(total_syllable_no+1):
+            chosen_syllable = rn.choice(self.syllables)
+            word_list.append(chosen_syllable)
+
+        joined_word = ''.join(word_list)
+
+        self.all_words.append(joined_word)
+
+
+def convert_to_decimal_encoding(syllable_list):
+    """
+    Convert the html selected and reordered 
+    values to html decimals for display
+    """
+    convert_decimal = htm.convert_to_decimal
+    converted_syllable_list = []
+    for s in syllable_list:
+        converted_syllable_list.append(convert_decimal[s])
+
+    converted_syllables = ''.join(converted_syllable_list)
+
+    return converted_syllables
