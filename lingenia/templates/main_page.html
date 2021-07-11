@@ -52,13 +52,11 @@
         </div>
 
         <div class="grid-item">
-            <!data inputs>
-            <!form action="/lingenia" method="POST">
             <label>Number of consonants:</label>
             <br>
             <input type="number" id="consonant_no">
             <button onclick="postInputs('vowel_no','consonant_no')" type="button" class="submit" id="consonants_id">Generate vowels and consonants</button>
-            <!/form>
+            <button onclick="sendHighlightedForSaving([''],['to_file'])" type="button" class="submit" id="download">Download results</button>
         </div>
 
         <div class="grid-item">
@@ -767,19 +765,9 @@
             <input type="number" id="word_no">
         </div>
         <div class="grid-item">
-            <label>Minimum word length:</label>
             <br>
-            <input type="number" id="word_length_min">
-        </div>
-        <div class="grid-item">
-            <label>Maximum word length:</label>
-            <br>
-            <input type="number" id="word_length_max">
-        </div>
-        <div class="grid-item">
-            <br>
-            <button onclick="sendHighlightedForWords(['word_no', 'word_length_min', 'word_length_max'],
-                                ['Number_words', 'Min_length', 'Max_length'])" 
+            <button onclick="sendHighlightedForWords(['word_no'],
+                                ['Number_words'])" 
                                 type="button" class="submit" id="consonants_id">Generate</button>
         </div>
 
@@ -803,7 +791,7 @@
             }
 
             function sendHighlightedForWords(data, labels){
-                // Get only currently highlighted data and send it back to the server. 
+                // Get only currently highlighted data and send it back to the server for word generation. 
                 var buttons = document.querySelectorAll("button");
                 var exists = getHighlighted(buttons);
                 labels = labels.concat(['v_list', 'c_list']);
@@ -830,6 +818,27 @@
                 };
             }
 
+            function sendHighlightedForSaving(data, labels){
+                // Get only currently highlighted data and send it back to the server, 
+                // along with the generated words, for saving. 
+
+                // Highlighted data.
+                var buttons = document.querySelectorAll("button");
+                var exists = getHighlighted(buttons);
+                labels = labels.concat(['v_list', 'c_list']);
+                data = data.concat(exists);
+                // Generated words. 
+                var words_list = []
+                var words = document.getElementById("new-words").children
+                for (j=0; j < words.length; j++){
+                    words_list = words_list.concat(words[j].innerHTML)
+                };
+                data.push(words_list)
+                labels = labels.concat(["gen_words"])
+
+                postData(data, labels)
+            };
+
             function eraseAllHighlighting(){
                 // Cycle through all elements of the verb and consonant tables. 
                 // If highlighted already, change text colour back to default.
@@ -840,7 +849,6 @@
                         node.style.color = "black";
                     };
                 };
-                console.log("erasing")
             }
 
             function highlightLetters(jsonName, selectName){
@@ -916,7 +924,7 @@
                 var consonantElement = consonantRows.getElementsByTagName("button").namedItem(id);
 
                 if (consonantElement !== null) {
-                        // If id of current element is in the vowels grid, then it is a vowel. 
+                        // If id of current element is in the consonant grid, then it is a consonant. 
                         clist.push(id);
                 };
                 return [vlist, clist]

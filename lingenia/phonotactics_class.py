@@ -63,10 +63,11 @@ class Syllable(object):
     def generate_syllables(self, number_of_syllables_to_gen):
         """Generate a number of syllables to use for constructing words"""
         for i in range(number_of_syllables_to_gen):
-            syllable_generated = self.syllable_structure()
+            coda_or_not = rn.choice([True, False])
+            syllable_generated = self.syllable_structure(open_syllable=coda_or_not)
             self.all_syllables.append(syllable_generated)
 
-    def syllable_structure(self):
+    def syllable_structure(self, open_syllable=False):
         """Generate a basic syllable structure"""
         phoneme_keys = list(self.available_phoneme_classes.keys())
         self.min_number = np.min(list(self.available_phoneme_classes.keys()))
@@ -78,7 +79,9 @@ class Syllable(object):
         output_syllable.append(onset)
         nucleus, nucleus_sonority_number = self.generate_nucleus(onset_sonority_number)
         output_syllable.append(nucleus)
-        output_syllable.append(self.generate_coda(nucleus_sonority_number))
+
+        if open_syllable:
+            output_syllable.append(self.generate_coda(nucleus_sonority_number))
 
         return output_syllable
 
@@ -108,6 +111,11 @@ class Syllable(object):
         phoneme_nos = np.array(list(self.available_phoneme_classes.keys()))
         phoneme_nos = phoneme_nos[phoneme_nos>onset_sonority_number]
         # Get only phoneme number categories larger than the onset. 
+
+        if onset_sonority_number<9:
+        # Additionally, get vowels only if current selection <9.
+            phoneme_nos = phoneme_nos[phoneme_nos>9]
+
         nucleus_sonority_number = rn.choice(list(phoneme_nos))
         nucleus_sonority = self.available_phoneme_classes[nucleus_sonority_number]
         extracted_keys = self.all_phonemes[nucleus_sonority]
@@ -119,7 +127,8 @@ class Syllable(object):
         """Generate the coda"""
         phoneme_nos = np.array(list(self.available_phoneme_classes.keys()))
         phoneme_nos = phoneme_nos[phoneme_nos<nucleus_sonority_number]
-        # Get only phoneme number categories larger than the onset. 
+        # Get only phoneme number categories larger than the onset.
+
         coda_sonority_number = rn.choice(list(phoneme_nos))
         coda_sonority = self.available_phoneme_classes[coda_sonority_number]
         extracted_keys = self.all_phonemes[coda_sonority]
@@ -139,13 +148,17 @@ class Words(object):
         self.sprobability_distribution = [0.2, 0.5, 0.2, 0.1]
         # Syllable number probability distribution.
 
+    def generate_words(self, number_of_words):
+        """Generate a list of words"""
+
+        for n in number_of_words:
+            self.generate_word()
 
     def generate_word(self):
         """Generate a single word """
         total_syllable_no = np.random.choice(list(range(1, 5)), 1,
                             p=self.sprobability_distribution)
         total_syllable_no = total_syllable_no[0]
-        print(total_syllable_no)
 
         word_list = []
 

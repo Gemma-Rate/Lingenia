@@ -4,10 +4,10 @@ import flask as fk
 import os
 import json
 
-from flask import g
 from lingenia import phonology_class as pc
 from lingenia import ipa_dict_simplified as ip
 from lingenia import phonotactics_class as pt
+from lingenia import html_dict as htdc
 
 def make_app(test_config=None):
 
@@ -34,8 +34,6 @@ def make_app(test_config=None):
         phoneme_str = ','.join(phoneme_code)
         # Single string with all the vowels, to pass to ajax.
 
-        #phoneme_json = {phoneme_name: phoneme_str}
-        #print(phoneme_str)
         return phoneme_str
 
     @app.route('/lingenia', methods=['GET', 'POST'])
@@ -51,25 +49,52 @@ def make_app(test_config=None):
                 # Vowel and consonant numbers. 
                 vowel_no, consonant_no = response['vowels_and_consonants']
                 vowel_json, consonant_json = forms(vowel_no, consonant_no)
-                g.vowels = vowel_json
-                g.consonants = consonant_json
                 classified = classify_phonemes(vowel_json, consonant_json)
                 return fk.jsonify(vowel_json=vowel_json, consonant_json=consonant_json) 
 
             elif list(keys)[0] == 'Number_words':
                 # Number of words to generates, maximum and minimum length.
                 classified = classify_phonemes(','.join(response['v_list']), ','.join(response['c_list']))
+                number_of_words = response['Number_words']
                 Syllables = pt.Syllable(classified)
-                Syllables.generate_syllables(150)
+                Syllables.generate_syllables(250)
                 converted = []
+                
                 for i in Syllables.all_syllables:
                     converted.append(pt.convert_to_decimal_encoding(i))
+                
+                if not number_of_words:
+                    # If no word number is specified, then generate 5 words.
+                    number_of_words = 5
 
                 Words_list = pt.Words(converted)
-                Words_list.generate_word()
+                Words_list.generate_words(number_of_words)
                    
                 return fk.jsonify(generated_words=Words_list.all_words)
 
+            elif list(keys)[0] == 'to_file':
+                classified = classify_phonemes(','.join(response['v_list']), ','.join(response['c_list']))
+                words = '\n'.join(response['gen_words'])
+
+                new_list = {}
+                for k in classified.keys():
+                    # Iterate through dictionary of classified phonemes.
+                    key_element = classified[k]
+                    key_element_list = []
+                    for c in key_element:
+                        # Iterate through list of phonemes. 
+                        key_element_list.append(htdc.convert_to_ascii[c])
+                    new_list[k] = key_element_list
+                #print(new_list)
+                #print(words)
+                with open('output.txt', 'w') as f:
+                    f.write('Generated phonemes:\n')
+                    for k,v in zip(new_list.keys(), new_list.values()):
+                        f.write(k+': '+', '.join(v)+'\n')
+                    f.write('\nGenerated words:\n')
+                    f.write(words)
+                    print('test')
+                return fk.send_file('/home/gemma/Documents/Python_projects/Lingenia/lingenia/output.txt')
             else:
                 classified = classify_phonemes(','.join(response['v_list']), ','.join(response['c_list']))
 
@@ -92,6 +117,9 @@ def make_app(test_config=None):
         return fk.render_template('contact.html')
 
     def forms(vowel_no, consonant_no):
+        """
+        Generate phonology using input vowel and consonant numbers.
+        """
 
         if not vowel_no:
             # Replace with constant if no vowel is specified.
