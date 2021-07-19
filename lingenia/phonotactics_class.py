@@ -151,7 +151,7 @@ class Words(object):
     def generate_words(self, number_of_words):
         """Generate a list of words"""
 
-        for n in number_of_words:
+        for n in range(number_of_words):
             self.generate_word()
 
     def generate_word(self):

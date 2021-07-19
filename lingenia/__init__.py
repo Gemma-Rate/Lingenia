@@ -14,13 +14,21 @@ def make_app(test_config=None):
     app = fk.Flask(__name__, instance_relative_config=True)
     # Create and configure the app.
 
-    app.config['TEMPLATES_AUTO_RELOAD']=True 
-
     try:
         os.makedirs(app.instance_path)
     except OSError:
         pass
     # Create the instance folder if it doesn't exist already.
+
+    try: 
+        cwd = os.getcwd()
+        os.makedirs(cwd+'/uploads')
+    except OSError:
+        pass
+    
+    ALLOWED_EXTENSIONS = {'txt'}
+    app.config['TEMPLATES_AUTO_RELOAD']=True 
+    app.config['UPLOAD_FOLDER'] = '/uploads'
 
     def encode_to_json(phoneme_list):
         """
@@ -35,6 +43,14 @@ def make_app(test_config=None):
         # Single string with all the vowels, to pass to ajax.
 
         return phoneme_str
+
+    @app.route('/return-files/')
+    def return_files_tut():
+        try:
+            return fk.send_file('/home/gemma/Documents/Python_projects/Lingenia/lingenia/output.txt', 
+                                attachment_filename='test.txt', as_attachment=True, cache_timeout=0)
+        except Exception as e:
+            return str(e)
 
     @app.route('/lingenia', methods=['GET', 'POST'])
     def main_page():
@@ -94,7 +110,8 @@ def make_app(test_config=None):
                     f.write('\nGenerated words:\n')
                     f.write(words)
                     print('test')
-                return fk.send_file('/home/gemma/Documents/Python_projects/Lingenia/lingenia/output.txt')
+
+                return fk.send_file('/home/gemma/Documents/Python_projects/Lingenia/lingenia/output.txt', as_attachment=True, cache_timeout=0)
             else:
                 classified = classify_phonemes(','.join(response['v_list']), ','.join(response['c_list']))
 
@@ -183,5 +200,15 @@ def make_app(test_config=None):
                 pass
 
         return df_keys
+
+    def check_allowed_filename(filename):
+        """Check filename is of the allowed type."""
+        split_files = filename.split('.')
+        split_files = split_files[1]
+        
+        if split_files in ALLOWED_EXTENSIONS:
+            return True
+        else:
+            return False
 
     return app
