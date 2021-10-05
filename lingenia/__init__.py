@@ -8,6 +8,7 @@ from lingenia import phonology_class as pc
 from lingenia import ipa_dict_simplified as ip
 from lingenia import phonotactics_class as pt
 from lingenia import html_dict as htdc
+from werkzeug.utils import secure_filename
 
 def make_app(test_config=None):
 
@@ -45,7 +46,7 @@ def make_app(test_config=None):
         return phoneme_str
 
     @app.route('/return-files/')
-    def return_files_tut():
+    def return_files():
         try:
             return fk.send_file('/home/gemma/Documents/Python_projects/Lingenia/lingenia/output.txt', 
                                 attachment_filename='test.txt', as_attachment=True, cache_timeout=0)
@@ -58,6 +59,8 @@ def make_app(test_config=None):
         Display the main page with phoneme and language generation. Also accept incoming ajax requests from the main page. 
         """
         if fk.request.method == 'POST':
+            print(fk.request.form)
+            print(fk.request.form.get('uploaded_file'))
             response = fk.request.get_json()
             keys = response.keys()
 
@@ -101,17 +104,30 @@ def make_app(test_config=None):
                         # Iterate through list of phonemes. 
                         key_element_list.append(htdc.convert_to_ascii[c])
                     new_list[k] = key_element_list
-                #print(new_list)
-                #print(words)
+
                 with open('output.txt', 'w') as f:
                     f.write('Generated phonemes:\n')
                     for k,v in zip(new_list.keys(), new_list.values()):
                         f.write(k+': '+', '.join(v)+'\n')
                     f.write('\nGenerated words:\n')
                     f.write(words)
-                    print('test')
 
-                return fk.send_file('/home/gemma/Documents/Python_projects/Lingenia/lingenia/output.txt', as_attachment=True, cache_timeout=0)
+            elif list(keys)[0] == 'from_file':
+                print('file received')
+                print()
+                file = fk.request.files['file']
+                print('test')
+
+                if file.filename == '':
+                    return redirect(request.url)
+
+                if file and check_allowed_filename(file.filename):
+                    filename = secure_filename(file.filename)
+                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    return fk.jsonify(vowel_json=vowel_json, consonant_json=consonant_json)                
+                
+                #return fk.send_file('/home/gemma/Documents/Python_projects/Lingenia/lingenia/output.txt', as_attachment=True, cache_timeout=0)
+
             else:
                 classified = classify_phonemes(','.join(response['v_list']), ','.join(response['c_list']))
 
@@ -211,4 +227,17 @@ def make_app(test_config=None):
         else:
             return False
 
+    @app.route('/upload-files/', methods=['GET', 'POST'])
+    def upload_files():
+        if fk.request.method == 'POST':
+            print('file received')
+            file = fk.request.files['file']
+
+            if file.filename == '':
+                return redirect(request.url)
+
+            if file and check_allowed_filename(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                return fk.jsonify(vowel_json=vowel_json, consonant_json=consonant_json) 
     return app

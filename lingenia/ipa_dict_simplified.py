@@ -2,14 +2,14 @@
 
 import pandas as pd
 
-vowels = {'front':[['\u0069','\u0079'], ['\u026A','\u028F'], ['\u0065','\u00F8'], ['\u00F8\u031E'],
+vowels = {'Front':[['\u0069','\u0079'], ['\u026A','\u028F'], ['\u0065','\u00F8'], ['\u00F8\u031E'],
                    ['\u025B','\u0153'], ['\u00E6'], ['\u0061','\u0276']],
-          'central':[['\u0268','\u0289'], '', ['\u0258','\u0275'], ['\u0259'],
+          'Central':[['\u0268','\u0289'], '', ['\u0258','\u0275'], ['\u0259'],
                      ['\u025C','\u025E'], ['\u0250'], ['\u0061\u0308']],
-          'back':[['\u026F','\u0075'], ['\u028A'], ['\u0264','\u006F'], ['\u006F\u031E'],
+          'Back':[['\u026F','\u0075'], ['\u028A'], ['\u0264','\u006F'], ['\u006F\u031E'],
                  ['\u028C','\u0254'], '', ['\u0251','\u0252']]}
 
-vindex = ['close','near-close','close-mid','mid','open-mid','near-open','open']
+vindex = ['Close','Near-close','Close-mid','Mid','Open-mid','Near-open','Open']
 
 vowel_df = pd.DataFrame(vowels, index=vindex)
 

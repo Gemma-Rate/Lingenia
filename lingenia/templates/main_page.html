@@ -56,7 +56,10 @@
             <br>
             <input type="number" id="consonant_no">
             <button onclick="postInputs('vowel_no','consonant_no')" type="button" class="submit" id="consonants_id">Generate vowels and consonants</button>
-            <a href="/return-files/" target="blank"></a><button onclick="sendHighlightedForSaving([''],['to_file'])" type="button" class="submit" id="download">Download results</button></a>
+            <button onclick="sendHighlightedForSaving([''],['to_file'])" type="button" class="submit" id="download">Download results</button>
+            <!form id='upload_form' enctype="multipart/form-data">
+            <input id="upload" name="uploaded_file" type="file" oninput="printDataFromFile([''],['from_file'])">
+            <!/form>
         </div>
 
         <div class="grid-item">
@@ -790,6 +793,38 @@
                 xhr.send(JSON.stringify(jsonObj));
             }
 
+            function printDataFromFile(data, labels){
+                // Display data from submitted file. 
+
+                eraseAllHighlighting()
+                // Erase existing highlighted text.
+                var uploadedFile = document.getElementById("upload");   
+                var file = uploadedFile.files;     
+
+                var fileData = new FormData();
+                // Send file as form to include name. 
+                fileData.append("upload", file[0], file[0].name);
+                console.log(fileData)
+                console.log(fileData.get("upload"))
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", '/lingenia', true);
+               //xhr.setRequestHeader("Content-Type","multipart/form-data");
+                xhr.send(fileData);
+
+
+                    var wordsJson = xhr.responseText;
+                    var words = JSON.parse(wordsJson);
+                    for (j = 0; j < words['generated_words'].length; j++){
+                        var newP = document.createElement("p");
+                        newP.innerHTML = words['generated_words'][j];
+                        document.getElementById("new-words").appendChild(newP);
+                    highlightLetters(outputJson, "vowel_json")
+                    highlightLetters(outputJson, "consonant_json")
+                    };
+                };
+            };
+
             function sendHighlightedForWords(data, labels){
                 // Get only currently highlighted data and send it back to the server for word generation. 
 
@@ -853,7 +888,7 @@
                 xhr.onload = function () {
                     console.log(xhr.getResponseHeader('Content-Disposition'))
                     window.open("/return-files/", '_blank');
-                }
+                };
                 
             };
 
@@ -903,7 +938,7 @@
                 };
                 xhr.send(JSON.stringify(jsonObj));
 
-            }
+            };
 
             // Play pronunciations on click. 
             function playAudio(ele) { 
