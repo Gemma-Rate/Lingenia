@@ -799,29 +799,28 @@
                 eraseAllHighlighting()
                 // Erase existing highlighted text.
                 var uploadedFile = document.getElementById("upload");   
-                var file = uploadedFile.files;     
-
-                var fileData = new FormData();
-                // Send file as form to include name. 
-                fileData.append("upload", file[0], file[0].name);
-                console.log(fileData)
-                console.log(fileData.get("upload"))
+                var file = uploadedFile.files[0];
+                var fileReader = new FileReader();
 
                 let xhr = new XMLHttpRequest();
                 xhr.open("POST", '/lingenia', true);
-               //xhr.setRequestHeader("Content-Type","multipart/form-data");
-                xhr.send(fileData);
+                xhr.setRequestHeader('Content-Type', 'application/json');
 
+                var jsonObj = {}
+                fileReader.onload = function(e){
+                    // Run when file reader has loaded. 
+                    var uploadedText = e.target.result
+                    jsonObj['from_file'] = uploadedText
+                    xhr.send(JSON.stringify(jsonObj));
+                    };
 
-                    var wordsJson = xhr.responseText;
-                    var words = JSON.parse(wordsJson);
-                    for (j = 0; j < words['generated_words'].length; j++){
-                        var newP = document.createElement("p");
-                        newP.innerHTML = words['generated_words'][j];
-                        document.getElementById("new-words").appendChild(newP);
+                var uploadedText = fileReader.readAsText(file, "UTF-8");
+
+                xhr.onload = function () {
+                    // Run when xhr response recieved. 
+                    var outputJson = xhr.responseText;
                     highlightLetters(outputJson, "vowel_json")
                     highlightLetters(outputJson, "consonant_json")
-                    };
                 };
             };
 
@@ -919,7 +918,7 @@
             function postInputs(vowelInputId, consonantInputId){
                 var vowelData = document.getElementById(vowelInputId).valueAsNumber
                 var consonantData = document.getElementById(consonantInputId).valueAsNumber
-                // Get content and vowle numbers of the input box.
+                // Get content and vowel numbers of the input box.
                 var dataList = [vowelData, consonantData]
 
                 eraseAllHighlighting()

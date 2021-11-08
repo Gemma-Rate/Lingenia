@@ -59,10 +59,9 @@ def make_app(test_config=None):
         Display the main page with phoneme and language generation. Also accept incoming ajax requests from the main page. 
         """
         if fk.request.method == 'POST':
-            print(fk.request.form)
-            print(fk.request.form.get('uploaded_file'))
             response = fk.request.get_json()
             keys = response.keys()
+            # Get JSON and response keys.
 
             if list(keys)[0] == 'vowels_and_consonants':
                 # Vowel and consonant numbers. 
@@ -77,6 +76,7 @@ def make_app(test_config=None):
                 number_of_words = response['Number_words']
                 Syllables = pt.Syllable(classified)
                 Syllables.generate_syllables(250)
+                # Generate 250 syllables to construct the word from. 
                 converted = []
                 
                 for i in Syllables.all_syllables:
@@ -113,20 +113,39 @@ def make_app(test_config=None):
                     f.write(words)
 
             elif list(keys)[0] == 'from_file':
-                print('file received')
-                print()
-                file = fk.request.files['file']
-                print('test')
+                # Convert the loaded file format to HTML codes for each of the phonemes. 
 
-                if file.filename == '':
-                    return redirect(request.url)
+                file_text = response['from_file']
+                sep_str = file_text.split('\n')
 
-                if file and check_allowed_filename(file.filename):
-                    filename = secure_filename(file.filename)
-                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    return fk.jsonify(vowel_json=vowel_json, consonant_json=consonant_json)                
+                consonants_titles = ['Nasal', 'Stop', 'Fricative', 'Approximant', 'Tap/flap', 
+                                     'Trill', 'Lateral fricative', 'Lateral approximant']
+                vowel_titles = ['Close', 'Near-close', 'Close-mid', 'Mid', 'Open-mid', 
+                                'Near-open', 'Open']
+                consonants, vowels = [], []
+                # Identify vowel and consonants. 
                 
-                #return fk.send_file('/home/gemma/Documents/Python_projects/Lingenia/lingenia/output.txt', as_attachment=True, cache_timeout=0)
+                for sp in sep_str:
+                # Get each phoneme element. 
+                    split_str = sp.split(':')
+                    try:
+                        for sp2 in split_str[1]:
+                            # Go through the generated phonemes.
+                            phonemes = sp2.split(',')
+                            if split_str[0] in consonants_titles:
+                                consonants.extend(phonemes)
+                            elif split_str[0] in vowel_titles:
+                                vowels.extend(phonemes)
+                    except IndexError:
+                        pass
+
+                vowels = [v for v in vowels if all([v!='', v!=' '])]
+                consonants = [c for c in consonants if all([c!='', c!=' '])]
+
+                vowel_json = encode_to_json(vowels)
+                consonant_json = encode_to_json(consonants)
+                
+                return fk.jsonify(vowel_json=vowel_json, consonant_json=consonant_json) 
 
             else:
                 classified = classify_phonemes(','.join(response['v_list']), ','.join(response['c_list']))
