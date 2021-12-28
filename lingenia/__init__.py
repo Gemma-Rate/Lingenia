@@ -11,7 +11,8 @@ from lingenia import html_dict as htdc
 from werkzeug.utils import secure_filename
 
 def make_app(test_config=None):
-
+    """Set up the app and configuration"""
+    
     app = fk.Flask(__name__, instance_relative_config=True)
     # Create and configure the app.
 
@@ -21,15 +22,8 @@ def make_app(test_config=None):
         pass
     # Create the instance folder if it doesn't exist already.
 
-    try: 
-        cwd = os.getcwd()
-        os.makedirs(cwd+'/uploads')
-    except OSError:
-        pass
-    
     ALLOWED_EXTENSIONS = {'txt'}
     app.config['TEMPLATES_AUTO_RELOAD']=True 
-    app.config['UPLOAD_FOLDER'] = '/uploads'
 
     def encode_to_json(phoneme_list):
         """
@@ -48,8 +42,8 @@ def make_app(test_config=None):
     @app.route('/return-files/')
     def return_files():
         try:
-            return fk.send_file('/home/gemma/Documents/Python_projects/Lingenia/lingenia/output.txt', 
-                                attachment_filename='test.txt', as_attachment=True, cache_timeout=0)
+            return fk.send_file('lingenia_download.txt', 
+                                attachment_filename='lingenia_download.txt', as_attachment=True, cache_timeout=0)
         except Exception as e:
             return str(e)
 
@@ -105,7 +99,7 @@ def make_app(test_config=None):
                         key_element_list.append(htdc.convert_to_ascii[c])
                     new_list[k] = key_element_list
 
-                with open('output.txt', 'w') as f:
+                with open('lingenia/lingenia_download.txt', 'w', encoding='utf-8') as f:
                     f.write('Generated phonemes:\n')
                     for k,v in zip(new_list.keys(), new_list.values()):
                         f.write(k+': '+', '.join(v)+'\n')
@@ -115,8 +109,9 @@ def make_app(test_config=None):
             elif list(keys)[0] == 'from_file':
                 # Convert the loaded file format to HTML codes for each of the phonemes. 
 
-                file_text = response['from_file']
+                file_text = response['from_file'].replace('\r', '')
                 sep_str = file_text.split('\n')
+                # Split on new lines.
 
                 consonants_titles = ['Nasal', 'Stop', 'Fricative', 'Approximant', 'Tap/flap', 
                                      'Trill', 'Lateral fricative', 'Lateral approximant']
@@ -126,16 +121,19 @@ def make_app(test_config=None):
                 # Identify vowel and consonants. 
                 
                 for sp in sep_str:
-                # Get each phoneme element. 
+                # Get each row in the file. 
                     split_str = sp.split(':')
+                    # Get each 'class' of phonemes (for the consonant and vowel titles above).
                     try:
                         for sp2 in split_str[1]:
-                            # Go through the generated phonemes.
+                            # Go through the generated phonemes in each class.
                             phonemes = sp2.split(',')
                             if split_str[0] in consonants_titles:
                                 consonants.extend(phonemes)
+                                # Add to consonants if 'class' title is in consonant title list.
                             elif split_str[0] in vowel_titles:
                                 vowels.extend(phonemes)
+                                # Add to vowels if 'class' title is in vowels title list.
                     except IndexError:
                         pass
 
@@ -245,18 +243,5 @@ def make_app(test_config=None):
             return True
         else:
             return False
-
-    @app.route('/upload-files/', methods=['GET', 'POST'])
-    def upload_files():
-        if fk.request.method == 'POST':
-            print('file received')
-            file = fk.request.files['file']
-
-            if file.filename == '':
-                return redirect(request.url)
-
-            if file and check_allowed_filename(file.filename):
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                return fk.jsonify(vowel_json=vowel_json, consonant_json=consonant_json) 
+ 
     return app

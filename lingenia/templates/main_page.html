@@ -57,9 +57,10 @@
             <input type="number" id="consonant_no">
             <button onclick="postInputs('vowel_no','consonant_no')" type="button" class="submit" id="consonants_id">Generate vowels and consonants</button>
             <button onclick="sendHighlightedForSaving([''],['to_file'])" type="button" class="submit" id="download">Download results</button>
-            <!form id='upload_form' enctype="multipart/form-data">
-            <input id="upload" name="uploaded_file" type="file" oninput="printDataFromFile([''],['from_file'])">
-            <!/form>
+            <label class="submit">
+			    <input id="upload" name="uploaded_file" type="file" oninput="printDataFromFile([''],['from_file'])">
+				Upload file
+			</label>
         </div>
 
         <div class="grid-item">
@@ -810,14 +811,15 @@
                 fileReader.onload = function(e){
                     // Run when file reader has loaded. 
                     var uploadedText = e.target.result
+					console.log(uploadedText)
                     jsonObj['from_file'] = uploadedText
                     xhr.send(JSON.stringify(jsonObj));
                     };
 
-                var uploadedText = fileReader.readAsText(file, "UTF-8");
+                var test = fileReader.readAsText(file, "UTF-8");
 
                 xhr.onload = function () {
-                    // Run when xhr response recieved. 
+                    // Run when xhr response recieved from python code. 
                     var outputJson = xhr.responseText;
                     highlightLetters(outputJson, "vowel_json")
                     highlightLetters(outputJson, "consonant_json")
@@ -904,13 +906,12 @@
             }
 
             function highlightLetters(jsonName, selectName){
-                //var jsonnput = "{{ " + jsonName + " | tojson | safe}}";
                 var j = JSON.parse(jsonName);
-                console.log(typeof j)
                 var jList = j[selectName].split(",");
                 console.log(jList)
                 var i;
                 for (i = 0; i < jList.length; i++) {
+				    console.log(jList[i])
                     document.getElementById(jList[i]).style.color = "red";
                 };
             };
