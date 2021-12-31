@@ -33,24 +33,33 @@ a {
   padding: 20px;
   font-size: 20px;
   }
+  
+.a1:hover {
+	background-color: #404040; 
+    color: white;
+}
 
 th td {
   text-align: left;
   padding: 10px;
-  font-size: 20px;
+  font-size: 10px;
 }
 
 table {
   border: 3px solid black;
   border-collapse: collapse;
-  font-size: 20px;
+  font-size: 15px;
+}
+
+table td{
+border:1px solid gray;
 }
 
 .para1 {
   color: black;
   text-align: left;
   font-size: 20px;
-  padding: 30px;
+  padding: 0px;
   }
 
 .cl {
@@ -65,7 +74,7 @@ label {
   color: black;
   text-align: left;
   font-size: 20px;
-  padding: 30px;
+  padding: 0px;
   }
 
 input {
@@ -112,7 +121,10 @@ button:hover {background-color: grey}
 .submit:active {
   background-color: #404040;
 }
-.submit:hover {background-color: #404040}
+.submit:hover {
+	background-color: #404040; 
+    color: white;
+}
 
 
 input[type="file"] {

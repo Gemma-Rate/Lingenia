@@ -4,13 +4,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!Metadata>
 
-<script type=text/javascript src="{{
-  url_for('static', filename='jquery-3.5.1.min.js') }}"></script>
-<script type=text/javascript>
-  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-</script>
-<!Include Jquery and script root for use in jquery script>
-
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
@@ -19,25 +12,11 @@
     <title>Lingenia</title>
 </head>
 <body>
-<!-- Run this javascript function when the page is loaded -->
-
-<!Website dom goes here>
-
-    <!Top bar:>
-
-    <nav class="nav1">
-        <a class="a1" href="{{ url_for('main_page') }}">Home</a>
-        <a class="a1" href="{{ url_for('about') }}">About</a>
-        <a class="a1" href="{{ url_for('contact') }}">Contact</a>
-        <!a are hyperlinks>
-    </nav>
 
     <!Title section>
     <section class="head1">
-        <!div is a division, or section>
         <h1>Lingenia</h1>
         <p>Automated language generation</p>
-        <!p is a paragraph>
     </section>
 
     Generate phonemes:
@@ -65,19 +44,19 @@
 
         <div class="grid-item">
             <section class="para1">
-                <p>IPA vowels (Red=Selected):</p>
+                <p>IPA vowels:</p>
             </section>
         </div>
 
         <div class="grid-item">
             <section class="para1">
-                <p>IPA Consonants (Red=Selected):</p>
+                <p>IPA Consonants:</p>
             </section>
         </div>
 
         <div class="grid-item">
             <div class="vowels1">
-                <table style="width:75%" id="vowelsTable">
+                <table style="width:90%" id="vowelsTable">
                 <tr>
                     <th> </th>
                     <th>Front</th>
@@ -101,7 +80,7 @@
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/5/53/Close_central_unrounded_vowel.ogg" />
                             </audio>
-                        </button>,
+                        </button>
                         <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button" id="B0289">&#x0289;
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/6/66/Close_central_rounded_vowel.ogg" />
@@ -112,7 +91,7 @@
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Close_back_unrounded_vowel.ogg" />
                             </audio>
-                        </button>,
+                        </button>
                         <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button" id="BU">&#x0075;
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Close_back_rounded_vowel.ogg" />
@@ -126,7 +105,7 @@
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Near-close_near-front_unrounded_vowel.ogg" />
                             </audio>
-                        </button>,
+                        </button>
                         <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button" id="B028F">&#x028F;
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Near-close_near-front_rounded_vowel.ogg" />
@@ -148,7 +127,7 @@
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Close-mid_front_unrounded_vowel.ogg" />
                             </audio>
-                        </button>,
+                        </button>
                         <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button" id="B\XF8">&#x00F8;
                             <audio controls>
                                  <source src="https://upload.wikimedia.org/wikipedia/commons/5/53/Close-mid_front_rounded_vowel.ogg" />
@@ -159,7 +138,7 @@
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/6/60/Close-mid_central_unrounded_vowel.ogg" />
                             </audio>
-                        </button>,
+                        </button>
                         <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button"  id="B0275">&#x0275;
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Close-mid_central_rounded_vowel.ogg" />
@@ -170,7 +149,7 @@
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/2/26/Close-mid_back_unrounded_vowel.ogg" />
                             </audio>
-                        </button>,
+                        </button>
                         <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button"  id="BO">&#x006F;
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/8/84/Close-mid_back_rounded_vowel.ogg" />
@@ -184,7 +163,7 @@
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Mid_front_unrounded_vowel.ogg" />
                             </audio>
-                        </button>,
+                        </button>
                         <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button"  id="B\XF8031E">&#x00F8;&#x031E;
                         <audio controls>
                         <source src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Mid_front_rounded_vowel.ogg" />
@@ -198,7 +177,7 @@
                         </button>
                     </td>
                     <td><button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button"  id="B0264\U031E">&#x0264;&#x031E;
-                        </button>,
+                        </button>
                         <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button"  id="BO031E">&#x006F;&#x031E;
                         <audio controls>
                         <source src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Mid_back_rounded_vowel.ogg" />
@@ -212,7 +191,7 @@
                         <audio controls>
                         <source src="https://upload.wikimedia.org/wikipedia/commons/7/71/Open-mid_front_unrounded_vowel.ogg" />
                         </audio>
-                        </button>,
+                        </button>
                         <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button"  id="B0153">&#x0153;
                         <audio controls>
                         <source src="https://upload.wikimedia.org/wikipedia/commons/0/00/Open-mid_front_rounded_vowel.ogg" />
@@ -223,7 +202,7 @@
                         <audio controls>
                         <source src="https://upload.wikimedia.org/wikipedia/commons/0/01/Open-mid_central_unrounded_vowel.ogg" />
                         </audio>
-                        </button>,
+                        </button>
                         <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button"  id="B025E">&#x025E;
                         <audio controls>
                         <source src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Open-mid_central_rounded_vowel.ogg" />
@@ -234,7 +213,7 @@
                         <audio controls>
                         <source src="https://upload.wikimedia.org/wikipedia/commons/8/80/PR-open-mid_back_unrounded_vowel2.ogg" />
                         </audio>
-                        </button>,
+                        </button>
                         <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button"  id="B0254">&#x0254;
                         <audio controls>
                         <source src="https://upload.wikimedia.org/wikipedia/commons/d/d0/PR-open-mid_back_rounded_vowel.ogg" />
@@ -264,7 +243,7 @@
                         <audio controls>
                         <source src="https://upload.wikimedia.org/wikipedia/commons/0/0e/PR-open_front_unrounded_vowel.ogg" />
                         </audio>
-                        </button>,
+                        </button>
                         <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button"  id="B0276">&#x0276;
                         <audio controls>
                         <source src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Open_front_rounded_vowel.ogg" />
@@ -281,7 +260,7 @@
                         <audio controls>
                         <source src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Open_back_unrounded_vowel.ogg" />
                         </audio>
-                        </button>,
+                        </button>
                         <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button"  id="B0252">&#x0252;
                         <audio controls>
                         <source src="https://upload.wikimedia.org/wikipedia/commons/3/31/PR-open_back_rounded_vowel.ogg" />
@@ -295,7 +274,7 @@
     
         <div class="grid-item">
             <div class="consonants1">
-                <table style="width:95%">
+                <table style="width:97%">
                 <tr>
                     <th> </th>
                     <th>Bi­labial</th>
@@ -316,7 +295,7 @@
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/5/51/Voiceless_bilabial_plosive.ogg" />
                             </audio>
-                        </button>,
+                        </button>
                         <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button" id="BB" >&#98;
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Voiced_bilabial_plosive.ogg" />
@@ -342,7 +321,7 @@
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Voiceless_retroflex_stop.oga" />
                             </audio>
-                        </button>,
+                        </button>
                         <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button" id="B0256" >&#598;
                             <audio controls>
                                 <source src="https://upload.wikimedia.org/wikipedia/commons/2/27/Voiced_retroflex_stop.oga" />
@@ -353,7 +332,7 @@
                         <audio controls>
                             <source src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Voiceless_palatal_plosive.ogg" />
                         </audio>
-                    </button>,
+                    </button>
                     <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button" id="B025F" >&#607;
                         <audio controls>
                             <source src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Voiced_palatal_plosive.ogg" />
@@ -364,7 +343,7 @@
                         <audio controls>
                             <source src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Voiceless_velar_plosive.ogg" />
                         </audio>
-                    </button>,
+                    </button>
                     <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button" id="B0261" >&#609;
                         <audio controls>
                             <source src="https://upload.wikimedia.org/wikipedia/commons/1/12/Voiced_velar_plosive_02.ogg" />
@@ -376,7 +355,7 @@
                         <audio controls>
                             <source src="https://upload.wikimedia.org/wikipedia/commons/1/19/Voiceless_uvular_plosive.ogg" />
                         </audio>
-                    </button>,
+                    </button>
                     <button ondblclick="playAudio(this)" onclick="addOrRemove(this)" type="button" id="B0262" >&#610;
                         <audio controls>
                             <source src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Voiced_uvular_stop.oga" />
@@ -778,7 +757,7 @@
     </div>
     
     <div id="new-words">
-
+        <!Insert newly generated words here>
     </div>
 
     <script>
