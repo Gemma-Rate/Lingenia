@@ -67,7 +67,7 @@ class Syllable(object):
             syllable_generated = self.syllable_structure(open_syllable=coda_or_not)
             self.all_syllables.append(syllable_generated)
 
-    def syllable_structure(self, open_syllable=False):
+    def syllable_structure(self, open_syllable=True):
         """Generate a basic syllable structure"""
         phoneme_keys = list(self.available_phoneme_classes.keys())
         self.min_number = np.min(list(self.available_phoneme_classes.keys()))
@@ -80,7 +80,8 @@ class Syllable(object):
         nucleus, nucleus_sonority_number = self.generate_nucleus(onset_sonority_number)
         output_syllable.append(nucleus)
 
-        if open_syllable:
+        if not open_syllable:
+            # Generate and add a coda if an open syllable is not being generated.
             output_syllable.append(self.generate_coda(nucleus_sonority_number))
 
         return output_syllable

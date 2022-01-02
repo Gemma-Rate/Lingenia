@@ -28,6 +28,39 @@ You should see the main Lingenia page as shown above.
 
 ## Requirements
 
+Lingenia was constructed using python 3 and requires the following packages:
+
+- Flask 
+- Numpy
+- Pandas
+- Random
+
+## Details and rules for word generation
+
+### Phoneme selection
+
+### Syllable generation
+
+Syllables are generated using the basic construction:
+
+Onset - Nucleus - Coda
+
+There is a random probability (currently 50% true or false, this may be modified to be more realistic in future) for a syllable to have no coda (be an 'open syllable').
+
+The choice of which phoneme to use as each component is governed by sonority rules, which are based on place of articulation:
+- Open vowels
+- Mid vowels
+- Close vowels and semivowels
+- Laterals and rhotics
+- Nasals
+- Fricatives
+- Stops
+
+Each level of sonority is mapped to a number. The onset sonority is randomly chosen (such that it is less than the maximum sonority) and the nucleus sonority will be randomly selected so that it is higher than the onset. If a coda is being generated, it will have a sonority lower than the nucleus.
+
+Phonemes with the designated sonority are then selected for each component of the syllable. The final output is a list of the syllable onset, nucleus and (if required) coda in order.
+
+### Word construction
 
 
 ## Possible future features
