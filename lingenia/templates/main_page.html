@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!This tells the document it is html>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!Metadata>
@@ -7,7 +6,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    <!This is the document header>
+    <!Document header for stylesheet>
     <meta charset="UTF-8">
     <title>Lingenia</title>
 </head>
@@ -16,44 +15,55 @@
     <!Title section>
     <section class="head1">
         <h1>Lingenia</h1>
-        <p>Automated language generation</p>
+		<button onclick="sendHighlightedForSaving([''],['to_file'])" type="button" class="submit" id="download">
+			Download results
+		</button>
+        <label class="submit">
+			<input id="upload" name="uploaded_file" type="file" oninput="printDataFromFile([''],['from_file'])">
+		    Upload file
+		</label>
     </section>
 
-    Generate phonemes:
-
-    <div class="grid-container">
+    <h2>Generate phonemes:</h2>
+	
+    <!Input number of vowels and consonants to generate>
+    <div class="vc-container">
 
         <div class="grid-item">
-            <!data inputs>
             <label>Number of vowels:</label>
             <br>
             <input type="number" id="vowel_no">
         </div>
-
+		
         <div class="grid-item">
             <label>Number of consonants:</label>
             <br>
             <input type="number" id="consonant_no">
-            <button onclick="postInputs('vowel_no','consonant_no')" type="button" class="submit" id="consonants_id">Generate vowels and consonants</button>
-            <button onclick="sendHighlightedForSaving([''],['to_file'])" type="button" class="submit" id="download">Download results</button>
-            <label class="submit">
-			    <input id="upload" name="uploaded_file" type="file" oninput="printDataFromFile([''],['from_file'])">
-				Upload file
-			</label>
+        </div>	
+		
+		<div class="grid-item">
+			<button onclick="postInputs('vowel_no','consonant_no')" type="button" class="submit" id="consonants_id">
+				Generate vowels and consonants
+			</button>
         </div>
-
+	</div>
+	
+    <div class="grid-container">
+	    
+		<! Vowel and Consonant IPA grid headers>
         <div class="grid-item">
             <section class="para1">
-                <p>IPA vowels:</p>
+                <label>IPA vowels:</label>
             </section>
         </div>
 
         <div class="grid-item">
             <section class="para1">
-                <p>IPA Consonants:</p>
+                <label>IPA Consonants:</label>
             </section>
         </div>
-
+        
+		<! Vowel and Consonant IPA grids>
         <div class="grid-item">
             <div class="vowels1">
                 <table style="width:90%" id="vowelsTable">
@@ -738,7 +748,7 @@
         
     </div>
 
-    Generate words:
+    <h2>Generate words:</h2>
 
     <div class="word-input-container">
 

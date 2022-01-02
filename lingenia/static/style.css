@@ -1,15 +1,22 @@
 body {
   background-color: white;
   font-family: Arial;
-  font-size: 30px;
+  font-size: 15px;
 }
 
 .head1 {
   color: black;
-  text-align: center;
+  text-align: left;
   padding: 20px;
-  font-size: 40px;
-  }
+  font-size: 20px;
+  font-weight: bold;
+}
+
+h2 {
+  font-family: Arial;
+  font-size: 20px;
+  font-weight: bold;
+}
 
 .a1 {
   color: white;
@@ -52,7 +59,7 @@ table {
 }
 
 table td{
-border:1px solid gray;
+border: 1px solid gray;
 }
 
 .para1 {
@@ -62,18 +69,10 @@ border:1px solid gray;
   padding: 0px;
   }
 
-.cl {
-  color: black;
-  font-weight: bold;
-  text-align: left;
-  font-size: 20px;
-  padding: 30px;
-  }
-
 label {
   color: black;
   text-align: left;
-  font-size: 20px;
+  font-size: 15px;
   padding: 0px;
   }
 
@@ -81,7 +80,15 @@ input {
   color: black;
   text-align: left;
   font-size: 20px;
-  }
+}
+
+.vc-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 20% 20% 60%;
+    grid-template-rows: auto auto;
+    grid-gap: 5px;
+}
 
 .grid-container {
     width: 100%;
@@ -96,37 +103,39 @@ input {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: auto auto;
-  grid-gap: 10px;
+  grid-gap: 5px;
 }
 
 audio {
   display: none;
- }
+}
 
 button {
   background: transparent;
   font-size: 20px;
   border: none !important;
 }
-button:hover {background-color: grey}
 
+button:hover {
+  background-color: grey
+}
 
 .submit {
   background: grey; 
   color: black; 
-  border: black;
   padding: 10px;
+  font-size: 15px;
 }
 
 .submit:active {
   background-color: #404040;
 }
+
 .submit:hover {
-	background-color: #404040; 
-    color: white;
+  background-color: #404040; 
+  color: white;
 }
 
-
 input[type="file"] {
-    display: none;
+  display: none;
 }
