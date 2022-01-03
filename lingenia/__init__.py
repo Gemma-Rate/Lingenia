@@ -99,7 +99,7 @@ def make_app(test_config=None):
                         key_element_list.append(htdc.convert_to_ascii[c])
                     new_list[k] = key_element_list
 
-                with open('lingenia/lingenia_download.txt', 'w', encoding='utf-8') as f:
+                with open('lingenia_download.txt', 'w', encoding='utf-8') as f:
                     f.write('Generated phonemes:\n')
                     for k,v in zip(new_list.keys(), new_list.values()):
                         f.write(k+': '+', '.join(v)+'\n')
