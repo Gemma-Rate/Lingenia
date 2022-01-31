@@ -19,11 +19,11 @@ To run Lingenia with a development environment on Windows:
 3. Open Windows cmd
 4. Go to the 'Lingenia' folder in the location of the cloned repository (by using the 'change directory' command 'cd', or by opening cmd in the folder location of Lingenia).
 5. Start the flask app by entering the following:
-'''
+```
 set FLASK_APP=lingenia
 set FLASK_ENV=development
 flask run
-'''
+```
 6. Open a browser window and go to http://127.0.0.1:5000/lingenia
 
 You should see the main Lingenia page as shown above.
@@ -39,7 +39,7 @@ Lingenia was constructed using Python 3 and requires the following packages:
 
 ## Details and rules for word generation
 
-Phonemes, the distinct sounds in the language, are selected first. These are then compiled into syllables and finally into words.
+Phonemes, the distinct sounds in the language, are selected first. These are then compiled into syllables and the syllables are compiled into words.
 
 ### Phoneme selection
 
@@ -71,9 +71,9 @@ Phonemes with the designated sonority are then selected for each component of th
 ### Word construction
 
 Words are currently set up to be constructed from between 1 and 4 syllables. The number of syllables to be used are chosen randomly, using the probability distribution 
-'''
+```
 [0.2, 0.5, 0.2, 0.1]
-'''
+```
 Each syllable is selected randomly (with replacement) from the overall pool generated at the syllable construction step. This does mean that words consisting of the same syllable repeated multiple times may be generated.
 
 ## Possible future features and bug fixes
