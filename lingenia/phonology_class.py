@@ -25,16 +25,12 @@ class Phonology(object):
     def generate_phonemes(self):
         """
         Generate a complete set of phonemes for the language.
-
-        :return:
         """
         pass
 
     def generate_vowel_numbers(self):
         """
         Generate ideal numbers of vowels, based on a weibull distribution.
-
-        :return:
         """
         pass
 
@@ -43,7 +39,7 @@ class Phonology(object):
         Generate a probability distribution with a min_percent chance
         of returning just one value and an equal chance of returning the
         other numbers, up to the max number of allowed results.
-        :return:
+         
         """
 
         lengthen = int(np.floor(max_selected / (100-min_percent) * 100))
