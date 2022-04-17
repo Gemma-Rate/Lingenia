@@ -142,10 +142,47 @@ function highlightLetters(jsonName, selectName){
     };
 };
 
+function errorNumber(testCharacter, errorId, checkRange=false){
+
+    errorContainer = document.getElementById(errorId)
+    // Get error container HTML element.
+
+    if (errorContainer.childElementCount > 0){
+        // Remove all error container elements. 
+        while (errorContainer.childElementCount > 0){
+            errorContainer.removeChild(errorContainer.lastChild)
+        };
+    };
+    errorElement = document.createElement("p")
+    isError = false
+
+    if (isNaN(testCharacter)){
+        message = document.createTextNode("Entry must be a number")
+        errorElement.appendChild(message)
+        errorContainer.appendChild(errorElement)
+        errorContainer.style.color = "red";
+        isError = true
+    };
+    if (checkRange==true) {
+        // Check that supplied number is in range. 
+        if ((testCharacter < 3) || (testCharacter > 50)){
+            errorElement.appendChild(document.createTextNode("Number must be between 3 and 50"))
+            errorContainer.appendChild(errorElement)
+            errorContainer.style.color = "red";
+            isError = true
+        };
+    };
+
+    return isError
+};
+
 function postInputs(vowelInputId, consonantInputId){
     var vowelData = document.getElementById(vowelInputId).valueAsNumber
     var consonantData = document.getElementById(consonantInputId).valueAsNumber
     // Get content and vowel numbers of the input box.
+    
+    isVowelError = errorNumber(vowelData, "vowel_entry", checkRange=true)
+    isConsonantError = errorNumber(consonantData, "consonant_entry", checkRange=true)
 
     // Check for invalid values.
     var dataList = [vowelData, consonantData]
@@ -153,18 +190,21 @@ function postInputs(vowelInputId, consonantInputId){
     eraseAllHighlighting()
     // Erase existing highlighted text.
 
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", '/lingenia', false);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    var jsonObj = {};
-    jsonObj["vowels_and_consonants"] = dataList;
+    if ((isVowelError==false) && (isConsonantError==false)) {
 
-    xhr.onload = function () {
-        var outputJson = xhr.responseText;
-        highlightLetters(outputJson, "vowel_json")
-        highlightLetters(outputJson, "consonant_json")
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", '/lingenia', false);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        var jsonObj = {};
+        jsonObj["vowels_and_consonants"] = dataList;
+
+        xhr.onload = function () {
+            var outputJson = xhr.responseText;
+            highlightLetters(outputJson, "vowel_json")
+            highlightLetters(outputJson, "consonant_json")
+        };
+        xhr.send(JSON.stringify(jsonObj));
     };
-    xhr.send(JSON.stringify(jsonObj));
 
 };
 
