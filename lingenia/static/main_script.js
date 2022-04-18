@@ -62,9 +62,19 @@ function sendHighlightedForWords(data, labels){
     labels = labels.concat(['v_list', 'c_list']);
     data = data.concat(exists);
     // Get generated phonemes.
-    
 
-    // Check for number of phonemes.
+    if (exists[0].length==0){
+        errorContainer = document.getElementById("word_no_entry")
+        cleanErrorContainer(errorContainer)
+        // Get error element and remove existing messages.
+        
+        errorElement = document.createElement("p")
+        message = document.createTextNode("Cannot generate words; no phonemes have been selected.")
+        errorElement.appendChild(message)
+        errorContainer.appendChild(errorElement)
+        errorContainer.style.color = "red";
+    };
+    // Check that phonemes have been generated, otherwise, display error message.
 
     if ((isNumberWordError==false) && (exists[0].length>0)) {
         // Check for valid number of words and highlighted phonemes.
@@ -151,10 +161,8 @@ function highlightLetters(jsonName, selectName){
     };
 };
 
-function errorNumber(testCharacter, errorId, checkRange=false){
-
-    errorContainer = document.getElementById(errorId)
-    // Get error container HTML element.
+function cleanErrorContainer(errorContainer) {
+    // Check the error container is empty so it isn't filled with multiple messages.
 
     if (errorContainer.childElementCount > 0){
         // Remove all error container elements. 
@@ -162,16 +170,27 @@ function errorNumber(testCharacter, errorId, checkRange=false){
             errorContainer.removeChild(errorContainer.lastChild)
         };
     };
+};
+
+function errorNumber(testCharacter, errorId, checkRange=false){
+
+    errorContainer = document.getElementById(errorId)
+    // Get error container HTML element.
+
+    cleanErrorContainer(errorContainer)
+
     errorElement = document.createElement("p")
     isError = false
 
     if (isNaN(testCharacter)){
+         // Check for non number entries. 
         message = document.createTextNode("Entry must be a number")
         errorElement.appendChild(message)
         errorContainer.appendChild(errorElement)
         errorContainer.style.color = "red";
         isError = true
     };
+   
     if (checkRange==true) {
         // Check that supplied number is in range. 
         if ((testCharacter < 3) || (testCharacter > 50)){
