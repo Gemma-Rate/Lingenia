@@ -54,7 +54,7 @@ function sendHighlightedForWords(data, labels){
 
     var numberData = document.getElementById(data[0]).valueAsNumber
     // Get number of words to generate. 
-    isNumberWordError = errorNumber(numberData, "word_no_entry")
+    isNumberWordError = errorNumber(numberData, "word_no_entry", checkRange=[1,100])
     data[0] = numberData
     // Replace first element of the data array with the number of words to generate. 
     var buttons = document.querySelectorAll("button");
@@ -77,7 +77,7 @@ function sendHighlightedForWords(data, labels){
     // Check that phonemes have been generated, otherwise, display error message.
 
     if ((isNumberWordError==false) && (exists[0].length>0)) {
-        // Check for valid number of words and highlighted phonemes.
+        // Check that a valid number of words is entered and highlighted phonemes.
 
         let xhr = new XMLHttpRequest();
         xhr.open("POST", '/lingenia', true);
@@ -172,7 +172,7 @@ function cleanErrorContainer(errorContainer) {
     };
 };
 
-function errorNumber(testCharacter, errorId, checkRange=false){
+function errorNumber(testCharacter, errorId, checkRange=[]){
 
     errorContainer = document.getElementById(errorId)
     // Get error container HTML element.
@@ -189,12 +189,13 @@ function errorNumber(testCharacter, errorId, checkRange=false){
         errorContainer.appendChild(errorElement)
         errorContainer.style.color = "red";
         isError = true
+        // Set error element to true.
     };
    
-    if (checkRange==true) {
-        // Check that supplied number is in range. 
-        if ((testCharacter < 3) || (testCharacter > 50)){
-            errorElement.appendChild(document.createTextNode("Number must be between 3 and 50"))
+    if (checkRange.length>0) {
+        // Check that supplied number is in a given range. 
+        if ((testCharacter < checkRange[0]) || (testCharacter > checkRange[1])){
+            errorElement.appendChild(document.createTextNode(`Number must be between ${checkRange[0]} and ${checkRange[1]}`))
             errorContainer.appendChild(errorElement)
             errorContainer.style.color = "red";
             isError = true
@@ -209,8 +210,8 @@ function postInputs(vowelInputId, consonantInputId){
     var consonantData = document.getElementById(consonantInputId).valueAsNumber
     // Get content and vowel numbers of the input box.
     
-    isVowelError = errorNumber(vowelData, "vowel_entry", checkRange=true)
-    isConsonantError = errorNumber(consonantData, "consonant_entry", checkRange=true)
+    isVowelError = errorNumber(vowelData, "vowel_entry", checkRange=[3,30])
+    isConsonantError = errorNumber(consonantData, "consonant_entry", checkRange=[3,50])
 
     // Check for invalid values.
     var dataList = [vowelData, consonantData]
