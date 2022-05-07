@@ -20,30 +20,7 @@ def make_app(test_config=None):
         pass
     # Create the instance folder if it doesn't exist already.
 
-    ALLOWED_EXTENSIONS = {'txt'}
     app.config['TEMPLATES_AUTO_RELOAD']=True 
-
-    def encode_to_json(phoneme_list):
-        """
-        Encode list contents and convert to a json for passing to ajax.
-        """
-        encoded = [str(a.encode('unicode_escape', 'backslashreplace')) for a in
-                   list(phoneme_list)]
-        phoneme_code = [s.replace("b'\\\\u'", '') for s in encoded]
-        phoneme_code = [s.replace("\\\\u", '') for s in phoneme_code]
-        phoneme_code = [s.replace("'", '').upper() for s in phoneme_code]
-        phoneme_str = ','.join(phoneme_code)
-        # Single string with all the vowels, to pass to ajax.
-
-        return phoneme_str
-
-    @app.route('/return-files/')
-    def return_files():
-        try:
-            return fk.send_file('lingenia_download.txt', 
-                                attachment_filename='lingenia_download.txt', as_attachment=True, cache_timeout=0)
-        except Exception as e:
-            return str(e)
 
     @app.route('/lingenia', methods=['GET', 'POST'])
     def main_page():
@@ -56,22 +33,21 @@ def make_app(test_config=None):
             # Get JSON and response keys.
 
             if list(keys)[0] == 'vowels_and_consonants':
-                # Vowel and consonant numbers. 
+                # Use Vowel and consonant numbers to generate phonology from scratch. 
                 vowel_no, consonant_no = response['vowels_and_consonants']
-                print(vowel_no, consonant_no)
-                vowel_json, consonant_json = forms(vowel_no, consonant_no)
+                vowel_json, consonant_json = generate_vowels_and_consonants(vowel_no, consonant_no)
                 classified = classify_phonemes(vowel_json, consonant_json)
                 return fk.jsonify(vowel_json=vowel_json, consonant_json=consonant_json) 
 
             elif list(keys)[0] == 'Number_words':
-                # Number of words to generates, maximum and minimum length.
+                # Generate a given number of words from the phonemes.
                 classified = classify_phonemes(','.join(response['v_list']), ','.join(response['c_list']))
                 number_of_words = response['Number_words']
                 Syllables = pt.Syllable(classified)
                 Syllables.generate_syllables(250)
                 # Generate 250 syllables to construct the word from. 
-                converted = []
                 
+                converted = []
                 for i in Syllables.all_syllables:
                     converted.append(pt.convert_to_decimal_encoding(i))
                 
@@ -85,27 +61,11 @@ def make_app(test_config=None):
                 return fk.jsonify(generated_words=Words_list.all_words)
 
             elif list(keys)[0] == 'to_file':
-                classified = classify_phonemes(','.join(response['v_list']), ','.join(response['c_list']))
-                words = '\n'.join(response['gen_words'])
-
-                new_list = {}
-                for k in classified.keys():
-                    # Iterate through dictionary of classified phonemes.
-                    key_element = classified[k]
-                    key_element_list = []
-                    for c in key_element:
-                        # Iterate through list of phonemes. 
-                        key_element_list.append(htdc.convert_to_ascii[c])
-                    new_list[k] = key_element_list
-
-                with open('lingenia_download.txt', 'w', encoding='utf-8') as f:
-                    f.write('Generated phonemes:\n')
-                    for k,v in zip(new_list.keys(), new_list.values()):
-                        f.write(k+': '+', '.join(v)+'\n')
-                    f.write('\nGenerated words:\n')
-                    f.write(words)
+                # Save user generated phonology and words to file.
+                save_generated_results(response)
 
             elif list(keys)[0] == 'from_file':
+                # Load user submitted phonology to generate more words and highlight phonemes.
                 # Convert the loaded file format to HTML codes for each of the phonemes. 
 
                 file_text = response['from_file'].replace('\r', '')
@@ -173,7 +133,15 @@ def make_app(test_config=None):
         """
         return fk.render_template('contact.html')
 
-    def forms(vowel_no, consonant_no):
+    @app.route('/return-files')
+    def return_files():
+        try:
+            return fk.send_file('lingenia_download.txt', 
+                                attachment_filename='lingenia_download.txt', as_attachment=True, cache_timeout=0)
+        except Exception as e:
+            return str(e)
+
+    def generate_vowels_and_consonants(vowel_no, consonant_no):
         """
         Generate phonology using input vowel and consonant numbers.
         """
@@ -186,7 +154,6 @@ def make_app(test_config=None):
         vowel_list = phonology.vowels
         consonant_list = phonology.consonants_list
         # Get vowels and consonants from phonology class. 
-        print(vowel_list, consonant_list)
         
         vowel_json = encode_to_json(vowel_list)
         consonant_json = encode_to_json(consonant_list)
@@ -197,7 +164,7 @@ def make_app(test_config=None):
 
     def classify_phonemes(vowels, consonants):
         """
-        Classify the selected phonemes from the UI.
+        Classify the selected phonemes (back to place and manner of articulation) from the UI.
         """
         df_class = {}
         vowels = vowels.split(',')
@@ -233,17 +200,51 @@ def make_app(test_config=None):
                 pass
 
         return df_keys
+    
+    def save_generated_results(json_response):
+        """
+        Save the generated phonemes and any words to an output file.
+        """
+        ipa_classed = classify_phonemes(','.join(json_response['v_list']), ','.join(json_response['c_list']))
+        words = '\n'.join(json_response['gen_words'])
+        ipa_classed = create_ascii_dict(ipa_classed)
 
-    def check_allowed_filename(filename):
-        """Check filename is of the allowed type."""
-        split_files = filename.split('.')
-        split_files = split_files[1]
-        
-        if split_files in ALLOWED_EXTENSIONS:
-            return True
-        else:
-            return False
+        with open('lingenia_download.txt', 'w', encoding='utf-8') as f:
+            f.write('Generated phonemes:\n')
+            for k,v in zip(ipa_classed.keys(), ipa_classed.values()):
+                f.write(k+': '+', '.join(v)+'\n')
+            f.write('\nGenerated words:\n')
+            f.write(words)
 
-    #def sanitise_file(filename)
- 
+    def create_ascii_dict(classified):
+        """
+        Convert back to ascii ipa characters from html format.
+        """
+        new_list = {}
+        for k in classified.keys():
+            # Iterate through dictionary of classified phonemes.
+            key_element = classified[k]
+            key_element_list = []
+            for c in key_element:
+                # Iterate through list of phonemes. 
+                key_element_list.append(htdc.convert_to_ascii[c])
+            new_list[k] = key_element_list
+
+        return new_list
+
+    def encode_to_json(phoneme_list):
+        """
+        Encode list contents and convert to a json for passing to ajax.
+        """
+        encoded = [str(a.encode('unicode_escape', 'backslashreplace')) for a in
+                   list(phoneme_list)]
+        phoneme_code = [s.replace("b'\\\\u'", '') for s in encoded]
+        phoneme_code = [s.replace("\\\\u", '') for s in phoneme_code]
+        phoneme_code = [s.replace("'", '').upper() for s in phoneme_code]
+        phoneme_str = ','.join(phoneme_code)
+        # Single string with all the vowels, to pass to ajax.
+
+        return phoneme_str
+
+
     return app
