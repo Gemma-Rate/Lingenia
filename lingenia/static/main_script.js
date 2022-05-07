@@ -150,12 +150,10 @@ function eraseAllHighlighting(){
 
 function highlightLetters(jsonName, selectName){
     // Change the selected letter colour to red. Takes the json with the
-    // vowels and consonants as input and  
+    // vowels and consonants as input.
     var j = JSON.parse(jsonName);
     var jList = j[selectName].split(",");
-    console.log(jList)
-    var i;
-    for (i = 0; i < jList.length; i++) {
+    for (let i = 0; i < jList.length; i++) {
         console.log(jList[i])
         document.getElementById(jList[i]).style.color = "red";
     };

@@ -2,13 +2,11 @@
 
 import flask as fk
 import os
-import json
 
 from lingenia import phonology_class as pc
 from lingenia import ipa_dict_simplified as ip
 from lingenia import phonotactics_class as pt
 from lingenia import html_dict as htdc
-from werkzeug.utils import secure_filename
 
 def make_app(test_config=None):
     """Set up the app and configuration"""
@@ -60,6 +58,7 @@ def make_app(test_config=None):
             if list(keys)[0] == 'vowels_and_consonants':
                 # Vowel and consonant numbers. 
                 vowel_no, consonant_no = response['vowels_and_consonants']
+                print(vowel_no, consonant_no)
                 vowel_json, consonant_json = forms(vowel_no, consonant_no)
                 classified = classify_phonemes(vowel_json, consonant_json)
                 return fk.jsonify(vowel_json=vowel_json, consonant_json=consonant_json) 
@@ -137,11 +136,19 @@ def make_app(test_config=None):
                     except IndexError:
                         pass
 
-                vowels = [v for v in vowels if all([v!='', v!=' '])]
-                consonants = [c for c in consonants if all([c!='', c!=' '])]
+                if vowels:
+                    vowels = [v for v in vowels if all([v!='', v!=' '])]
+                    vowel_json = encode_to_json(vowels)
 
-                vowel_json = encode_to_json(vowels)
-                consonant_json = encode_to_json(consonants)
+                if consonants:
+                    consonants = [c for c in consonants if all([c!='', c!=' '])]
+                    consonant_json = encode_to_json(consonants)
+                else:
+                    # Run if empty lists (data file is not in correct format.)
+                    vowels.append('no result')
+                    vowel_json = encode_to_json(vowels)
+                    consonants.append('no result')
+                    consonant_json = encode_to_json(consonants)
                 
                 return fk.jsonify(vowel_json=vowel_json, consonant_json=consonant_json) 
 
@@ -170,13 +177,6 @@ def make_app(test_config=None):
         """
         Generate phonology using input vowel and consonant numbers.
         """
-
-        if not vowel_no:
-            # Replace with constant if no vowel is specified.
-            vowel_no = 5
-        if not consonant_no:
-            # Do the same with consonants.
-            consonant_no = 20
 
         phonology = pc.Phonology(consonant_no, vowel_no)
         phonology.generate_vowels_full()
@@ -243,5 +243,7 @@ def make_app(test_config=None):
             return True
         else:
             return False
+
+    #def sanitise_file(filename)
  
     return app

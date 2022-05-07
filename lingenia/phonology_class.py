@@ -39,7 +39,6 @@ class Phonology(object):
         Generate a probability distribution with a min_percent chance
         of returning just one value and an equal chance of returning the
         other numbers, up to the max number of allowed results.
-         
         """
 
         lengthen = int(np.floor(max_selected / (100-min_percent) * 100))
@@ -59,8 +58,6 @@ class Phonology(object):
     def generate_vowels_full(self):
         """
         Generate a complete set of phonemes for the language.
-
-        :return:
         """
         total_vowel_no = self.vowel_number
         vowel_phoible_data = pd.DataFrame(pv.phoible_vowels)
@@ -97,10 +94,7 @@ class Phonology(object):
 
     def select_element(self, ipa_element, probabilities):
         """
-
-        :param probabilities:
-        :param ipa_element:
-        :return:
+        Select an individual consonant depending on the probability of occurance.
         """
         probability_indiv = probabilities.loc[ipa_element, 'frequency']
         # Get the probability of the individual consonant.
@@ -137,16 +131,13 @@ class Phonology(object):
 
     def generate_consonant_row(self, row_name):
         """
-        Generate a column of consonants.
-
-        :return:
+        Generate a row of consonants.
         """
         consonant = ip.consonant_df
-
-        # Need voiced resonants (nasal, liquid)
         row_data = consonant.loc[row_name, :]
         row_data = row_data.replace(to_replace='', value=np.nan)
         row_data = row_data.dropna()
+        # Remove empty gaps from the ipa table. 
 
         return row_data
 
