@@ -65,51 +65,8 @@ def make_app(test_config=None):
                 save_generated_results(response)
 
             elif list(keys)[0] == 'from_file':
-                # Load user submitted phonology to generate more words and highlight phonemes.
-                # Convert the loaded file format to HTML codes for each of the phonemes. 
+                vowel_json, consonant_json = load_input_file(response)
 
-                file_text = response['from_file'].replace('\r', '')
-                sep_str = file_text.split('\n')
-                # Split on new lines.
-
-                consonants_titles = ['Nasal', 'Stop', 'Fricative', 'Approximant', 'Tap/flap', 
-                                     'Trill', 'Lateral fricative', 'Lateral approximant']
-                vowel_titles = ['Close', 'Near-close', 'Close-mid', 'Mid', 'Open-mid', 
-                                'Near-open', 'Open']
-                consonants, vowels = [], []
-                # Identify vowel and consonants. 
-                
-                for sp in sep_str:
-                # Get each row in the file. 
-                    split_str = sp.split(':')
-                    # Get each 'class' of phonemes (for the consonant and vowel titles above).
-                    try:
-                        for sp2 in split_str[1]:
-                            # Go through the generated phonemes in each class.
-                            phonemes = sp2.split(',')
-                            if split_str[0] in consonants_titles:
-                                consonants.extend(phonemes)
-                                # Add to consonants if 'class' title is in consonant title list.
-                            elif split_str[0] in vowel_titles:
-                                vowels.extend(phonemes)
-                                # Add to vowels if 'class' title is in vowels title list.
-                    except IndexError:
-                        pass
-
-                if vowels:
-                    vowels = [v for v in vowels if all([v!='', v!=' '])]
-                    vowel_json = encode_to_json(vowels)
-
-                if consonants:
-                    consonants = [c for c in consonants if all([c!='', c!=' '])]
-                    consonant_json = encode_to_json(consonants)
-                else:
-                    # Run if empty lists (data file is not in correct format.)
-                    vowels.append('no result')
-                    vowel_json = encode_to_json(vowels)
-                    consonants.append('no result')
-                    consonant_json = encode_to_json(consonants)
-                
                 return fk.jsonify(vowel_json=vowel_json, consonant_json=consonant_json) 
 
             else:
@@ -155,12 +112,11 @@ def make_app(test_config=None):
         consonant_list = phonology.consonants_list
         # Get vowels and consonants from phonology class. 
         
-        vowel_json = encode_to_json(vowel_list)
-        consonant_json = encode_to_json(consonant_list)
+        vowels_encoded = encode_to_json(vowel_list)
+        consonant_encoded = encode_to_json(consonant_list)
         # Get encoded results for JSON.
 
-        return vowel_json, consonant_json
-        # return vowel_json
+        return vowels_encoded, consonant_encoded
 
     def classify_phonemes(vowels, consonants):
         """
@@ -245,6 +201,56 @@ def make_app(test_config=None):
         # Single string with all the vowels, to pass to ajax.
 
         return phoneme_str
+
+    def load_input_file(json_response):
+        """
+        Load user submitted phonology to generate more words and highlight phonemes.
+        """            
+        # Convert the loaded file format to HTML codes for each of the phonemes. 
+
+        file_text = json_response['from_file'].replace('\r', '')
+        sep_str = file_text.split('\n')
+        # Split on new lines.
+
+        consonants_titles = ['Nasal', 'Stop', 'Fricative', 'Approximant', 'Tap/flap', 
+                                'Trill', 'Lateral fricative', 'Lateral approximant']
+        vowel_titles = ['Close', 'Near-close', 'Close-mid', 'Mid', 'Open-mid', 
+                        'Near-open', 'Open']
+        consonants, vowels = [], []
+        # Identify vowel and consonants. 
+        
+        for sp in sep_str:
+        # Get each row in the file. 
+            split_str = sp.split(':')
+            # Get each 'class' of phonemes (for the consonant and vowel titles above).
+            try:
+                for sp2 in split_str[1]:
+                    # Go through the generated phonemes in each class.
+                    phonemes = sp2.split(',')
+                    if split_str[0] in consonants_titles:
+                        consonants.extend(phonemes)
+                        # Add to consonants if 'class' title is in consonant title list.
+                    elif split_str[0] in vowel_titles:
+                        vowels.extend(phonemes)
+                        # Add to vowels if 'class' title is in vowels title list.
+            except IndexError:
+                pass
+
+        if vowels:
+            vowels = [v for v in vowels if all([v!='', v!=' '])]
+            vowel_encoded = encode_to_json(vowels)
+
+        if consonants:
+            consonants = [c for c in consonants if all([c!='', c!=' '])]
+            consonant_encoded = encode_to_json(consonants)
+        else:
+            # Run if empty lists (data file is not in correct format.)
+            vowels.append('no result')
+            vowel_encoded = encode_to_json(vowels)
+            consonants.append('no result')
+            consonant_encoded = encode_to_json(consonants)
+        
+        return vowel_encoded, consonant_encoded
 
 
     return app
