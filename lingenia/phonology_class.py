@@ -34,7 +34,7 @@ class Phonology(object):
         """
         pass
 
-    def generate_prob_list(self, max_selected, min_percent=5):
+    def _generate_prob_list(self, max_selected, min_percent=5):
         """
         Generate a probability distribution with a min_percent chance
         of returning just one value and an equal chance of returning the
@@ -57,7 +57,7 @@ class Phonology(object):
 
     def generate_vowels_full(self):
         """
-        Generate a complete set of phonemes for the language.
+        Generate a complete set of vowels for the language.
         """
         total_vowel_no = self.vowel_number
         vowel_phoible_data = pd.DataFrame(pv.phoible_vowels)
@@ -199,13 +199,13 @@ class Phonology(object):
         total_consonant_no_remaining = self.consonant_number
         nasal_col = self.generate_consonant_row('Nasal')
 
-        # Currently, the code can get 'stuck' on some selections, so we use a 
+        # Currently, the code can get 'stuck' on some selections, so we use a
 
-        nasal_num = self.generate_prob_list(len(nasal_col.values))
+        nasal_num = self._generate_prob_list(len(nasal_col.values))
         while (nasal_num < 2) and (nasal_num > (total_consonant_no_remaining -2)):
             # Minimum available nasal consonants and maximum possible 
             # nasal consonants without losing liquid columns. 
-            nasal_num = self.generate_prob_list(len(nasal_col.values)-1)
+            nasal_num = self._generate_prob_list(len(nasal_col.values)-1)
         nasal_consonants = self.select_from_column(nasal_col,
                                                    nasal_num)
         # Nasal consonants.
@@ -220,11 +220,11 @@ class Phonology(object):
             # Get total numbers of liquids available. 
 
         liquid_consonants = {}
-        liquid_num = self.generate_prob_list(total_liquid_col_nos)
+        liquid_num = self._generate_prob_list(total_liquid_col_nos)
         while (liquid_num > total_consonant_no_remaining) or (liquid_num < 2):
             # Ensure the number of liquids is less than the total
             # remaining consonant number and more than 2.
-            liquid_num = self.generate_prob_list(total_liquid_col_nos)
+            liquid_num = self._generate_prob_list(total_liquid_col_nos)
 
         for i in range(len(liquid_cols)):
             if liquid_num > 2: 
@@ -254,7 +254,7 @@ class Phonology(object):
                     remaining_col = remaining_col.replace(to_replace='', value=np.nan)
                     remaining_col = remaining_col.dropna()
                     
-                    select_num = self.generate_prob_list(total_consonant_no_remaining)
+                    select_num = self._generate_prob_list(total_consonant_no_remaining)
                     new_consonants = self.select_from_column(remaining_col, select_num)
                     # Select new consonants from the chosen column.
                     self.consonants.update({r : new_consonants})
@@ -275,6 +275,21 @@ class Phonology(object):
         selected_col = self.generate_consonant_row(selected_column_name)
 
         return selected_col
+    
+    @staticmethod
+    def encode_to_json(phoneme_list):
+        """
+        Encode list contents and convert to a json for passing to ajax.
+        """
+        encoded = [str(a.encode('unicode_escape', 'backslashreplace')) for a in
+                   list(phoneme_list)]
+        phoneme_code = [s.replace("b'\\\\u'", '') for s in encoded]
+        phoneme_code = [s.replace("\\\\u", '') for s in phoneme_code]
+        phoneme_code = [s.replace("'", '').upper() for s in phoneme_code]
+        phoneme_str = ','.join(phoneme_code)
+        # Single string with all the vowels, to pass to ajax.
+
+        return phoneme_str
 
         
 
