@@ -23,42 +23,53 @@ def generate_vowels_and_consonants(vowel_no, consonant_no):
 
     return vowels_encoded, consonant_encoded
 
-def classified_to_dictionary():
-    pass
+def classified_to_dictionary(phoneme_dict):
+    """
+    Convert the classified data into a dictionary that maps each vowel or 
+    consonant to manner of articulation.
+    """
+
+    df_class = {}
+    # Create storage dictionary.
+
+    for index, row in phoneme_dict.iterrows():
+        # Cycle through dictionary rows to get vowels and consonants.
+        rowlist = row.to_numpy().tolist()
+        flattened = [pc.Phonology.encode_to_json(item) for slist in rowlist for item in slist]
+        # Get all possible vowels or consonants with a given manner of articulation.
+        for f in flattened:
+            df_class[f] = index
+            # Create a dictionary that maps each vowel or consonant to the manner of articulation
+            # by assigning it to the index of the row iteration.
+    
+    return df_class
 
 def classify_phonemes(vowels, consonants):
     """
-    Classify the selected phonemes (back to place and manner of articulation) from the UI.
+    Classify the selected phonemes (back to manner of articulation) from the UI.
     """
-    df_class = {}
+    
     vowels = vowels.split(',')
     consonants = consonants.split(',')
-    keys = vowels+consonants
+    keys = vowels + consonants
+    # Get all vowels and consonants.
 
-    ip_vowels = ip.vowel_df
-    vowel_keys = ip_vowels.index.values
-    for index, row in ip_vowels.iterrows():
-        rowlist = row.to_numpy().tolist()
-        flattened = [pc.Phonology.encode_to_json(item) for slist in rowlist for item in slist]
-        for f in flattened:
-            df_class[f] = index
+    vowel_keys = ip.vowel_df.index.values
+    consonant_keys = ip.consonant_df.index.values
+    # Get manner of articulation from vowel or consonant dictionary indices.
 
-    ip_consonants = ip.consonant_df
-    consonant_keys = ip_consonants.index.values
-    for index, row in ip_consonants.iterrows():
-        rowlist = row.to_numpy().tolist()
-        flattened = [pc.Phonology.encode_to_json(item) for slist in rowlist for item in slist]
-        for f in flattened:
-            df_class[f] = index
+    classified_vowel_df = classified_to_dictionary(vowel_keys)
+    classified_consonant_df = classified_to_dictionary(consonant_keys)
+    classified_all_df = {**classified_vowel_df, **classified_consonant_df}
+    # Create dictionary mapping for each possible vowel and consonant back to manner of articulation.
     
-    all_keys = list(consonant_keys)+list(vowel_keys)
-
+    all_keys = list(consonant_keys) + list(vowel_keys)
     df_keys = {ak:[] for ak in all_keys} 
-    # Create empty lists to fill for each type of phonemes. 
+    # Create empty lists for each manner of articulation to fill for each type of phonemes. 
 
     for k in keys:
         try:
-            key_for_all = df_class[k]
+            key_for_all = classified_all_df[k]
             df_keys[key_for_all].append(k)
         except KeyError:
             pass
@@ -70,13 +81,16 @@ def save_generated_results(json_response):
     Save the generated phonemes and any words to an output file.
     """
     ipa_classed = classify_phonemes(','.join(json_response['v_list']), ','.join(json_response['c_list']))
-    words = '\n'.join(json_response['gen_words'])
     ipa_classed = create_ascii_dict(ipa_classed)
-
+    # Classified phonemes back to manner of articulation.
+    words = '\n'.join(json_response['gen_words'])
+    
     with open('lingenia_download.txt', 'w', encoding='utf-8') as f:
+
         f.write('Generated phonemes:\n')
         for k,v in zip(ipa_classed.keys(), ipa_classed.values()):
             f.write(k+': '+', '.join(v)+'\n')
+
         f.write('\nGenerated words:\n')
         f.write(words)
 
@@ -84,20 +98,19 @@ def create_ascii_dict(classified):
     """
     Convert back to ascii ipa characters from html format.
     """
-    new_list = {}
+    ascii_list = {}
     for k in classified.keys():
         # Iterate through dictionary of classified phonemes to get all phonemes in a specific manner of articulation.
         key_element = classified[k]
-        new_list[k] = [htdc.convert_to_ascii[c] for c in key_element]
+        ascii_list[k] = [htdc.convert_to_ascii[c] for c in key_element]
         
-    return new_list
+    return ascii_list
 
 def load_input_file(json_response):
     """
     Load user submitted phonology to generate more words and highlight phonemes.
     """            
-    # Convert the loaded file format to HTML codes for each of the phonemes. 
-
+    # Convert the loaded file format to HTML codes for each of the phonemes.
     file_text = json_response['from_file'].replace('\r', '')
     sep_str = file_text.split('\n')
     # Split on new lines.
@@ -106,23 +119,24 @@ def load_input_file(json_response):
                             'Trill', 'Lateral fricative', 'Lateral approximant']
     vowel_titles = ['Close', 'Near-close', 'Close-mid', 'Mid', 'Open-mid', 
                     'Near-open', 'Open']
+    # Get manners of articulation for vowels and consonants. 
+
     consonants, vowels = [], []
-    # Identify vowel and consonants. 
     
     for sp in sep_str:
     # Get each row in the file. 
         split_str = sp.split(':')
-        # Get each 'class' of phonemes (for the consonant and vowel titles above).
+        # Get each manner of articulation for phonemes (for the consonant and vowel titles above).
         try:
             for sp2 in split_str[1]:
-                # Go through the generated phonemes in each class.
+                # Cycle through the generated phonemes in each manner of articulation.
                 phonemes = sp2.split(',')
                 if split_str[0] in consonants_titles:
                     consonants.extend(phonemes)
-                    # Add to consonants if 'class' title is in consonant title list.
+                    # Add to consonants if manner of articulation is in consonant title list.
                 elif split_str[0] in vowel_titles:
                     vowels.extend(phonemes)
-                    # Add to vowels if 'class' title is in vowels title list.
+                    # Add to vowels if manner of articulation is in vowels title list.
         except IndexError:
             pass
 
