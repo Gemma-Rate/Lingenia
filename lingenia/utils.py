@@ -58,8 +58,8 @@ def classify_phonemes(vowels, consonants):
     consonant_keys = ip.consonant_df.index.values
     # Get manner of articulation from vowel or consonant dictionary indices.
 
-    classified_vowel_df = classified_to_dictionary(vowel_keys)
-    classified_consonant_df = classified_to_dictionary(consonant_keys)
+    classified_vowel_df = classified_to_dictionary(ip.vowel_df)
+    classified_consonant_df = classified_to_dictionary(ip.consonant_df)
     classified_all_df = {**classified_vowel_df, **classified_consonant_df}
     # Create dictionary mapping for each possible vowel and consonant back to manner of articulation.
     
