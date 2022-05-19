@@ -34,7 +34,7 @@ class Phonology(object):
         """
         pass
 
-    def generate_prob_list(self, max_selected, min_percent=5):
+    def _generate_prob_list(self, max_selected, min_percent=5):
         """
         Generate a probability distribution with a min_percent chance
         of returning just one value and an equal chance of returning the
@@ -57,7 +57,7 @@ class Phonology(object):
 
     def generate_vowels_full(self):
         """
-        Generate a complete set of phonemes for the language.
+        Generate a complete set of vowels for the language.
         """
         total_vowel_no = self.vowel_number
         vowel_phoible_data = pd.DataFrame(pv.phoible_vowels)
@@ -143,7 +143,7 @@ class Phonology(object):
 
     def select_from_column(self, col_data, sel_consonant_number):
         """
-        Select from the consonant column.
+        Select a consonant from the consonant column.
         """
         consonant_phoible_data = pd.DataFrame(pcs.phoible_consonants)
         decoded = [bytes(a, 'utf-8').decode("unicode_escape") for a in
@@ -190,41 +190,38 @@ class Phonology(object):
 
         return column_list
 
-
-    def generate_all_consonants(self):
+    def generate_nasal_consonants(self, nasal_col, total_consonant_no_remaining):
         """
-        Generate the required number of consonants.
-        :return:
+        Generate all the consonants from nasal columns. 
         """
-        total_consonant_no_remaining = self.consonant_number
-        nasal_col = self.generate_consonant_row('Nasal')
+        nasal_num = self._generate_prob_list(len(nasal_col.values))
 
-        # Currently, the code can get 'stuck' on some selections, so we use a 
-
-        nasal_num = self.generate_prob_list(len(nasal_col.values))
         while (nasal_num < 2) and (nasal_num > (total_consonant_no_remaining -2)):
             # Minimum available nasal consonants and maximum possible 
             # nasal consonants without losing liquid columns. 
-            nasal_num = self.generate_prob_list(len(nasal_col.values)-1)
+            nasal_num = self._generate_prob_list(len(nasal_col.values)-1)
         nasal_consonants = self.select_from_column(nasal_col,
                                                    nasal_num)
         # Nasal consonants.
         total_consonant_no_remaining = total_consonant_no_remaining  - len(nasal_consonants)
 
-        liquid_cols = ['Trill', 'Lateral fricative', 'Lateral approximant']
-        # Randomly generate the number of liquid columns to select.
-        
+        return total_consonant_no_remaining, nasal_consonants
+
+    def generate_liquid_consonants(self, liquid_cols, total_consonant_no_remaining):
+        """
+        Generate all the consonants from liquid columns.
+        """
         total_liquid_col_nos = 0
         for col in liquid_cols:
             total_liquid_col_nos = total_liquid_col_nos + len(self.generate_consonant_row(col).values)
             # Get total numbers of liquids available. 
 
         liquid_consonants = {}
-        liquid_num = self.generate_prob_list(total_liquid_col_nos)
+        liquid_num = self._generate_prob_list(total_liquid_col_nos)
         while (liquid_num > total_consonant_no_remaining) or (liquid_num < 2):
             # Ensure the number of liquids is less than the total
             # remaining consonant number and more than 2.
-            liquid_num = self.generate_prob_list(total_liquid_col_nos)
+            liquid_num = self._generate_prob_list(total_liquid_col_nos)
 
         for i in range(len(liquid_cols)):
             if liquid_num > 2: 
@@ -236,12 +233,13 @@ class Phonology(object):
         total_consonant_no_remaining = total_consonant_no_remaining - len(liquid_consonants)
         # Liquid consonants.
 
-        # Remove the liquid and nasal from the ipa dictionary. 
-        all_consonants = ip.consonant_df
-        drop_cols = liquid_cols + ['Nasal']
-        all_consonants = all_consonants.drop(labels=drop_cols)
+        return total_consonant_no_remaining, liquid_consonants
 
-        self.consonants = {}
+    def generate_remaining_consonants(self, all_consonants, total_consonant_no_remaining):
+        """
+        Generate non nassal and liquid consnants, based on the remaining number required
+        """
+        remaining_consonants = {}
         while total_consonant_no_remaining > 0:
             # Only run remaining columns if 'spare' consonants are left.
             remaining_cols = list(all_consonants.columns.values)
@@ -254,15 +252,43 @@ class Phonology(object):
                     remaining_col = remaining_col.replace(to_replace='', value=np.nan)
                     remaining_col = remaining_col.dropna()
                     
-                    select_num = self.generate_prob_list(total_consonant_no_remaining)
+                    select_num = self._generate_prob_list(total_consonant_no_remaining)
                     new_consonants = self.select_from_column(remaining_col, select_num)
                     # Select new consonants from the chosen column.
-                    self.consonants.update({r : new_consonants})
+                    remaining_consonants.update({r : new_consonants})
                     total_consonant_no_remaining = total_consonant_no_remaining - len(new_consonants)
+        
+        return remaining_consonants
+
+    def generate_all_consonants(self):
+        """
+        Generate the required number of consonants.
+        :return:
+        """
+        total_consonant_no_remaining = self.consonant_number
+        nasal_col = self.generate_consonant_row('Nasal')
+
+        total_consonant_no_remaining, nasal_consonants = self.generate_nasal_consonants(nasal_col, 
+                                                                                        total_consonant_no_remaining)
+
+        liquid_cols = ['Trill', 'Lateral fricative', 'Lateral approximant']
+        # Randomly generate the number of liquid columns to select.
+        
+        total_consonant_no_remaining, liquid_consonants = self.generate_liquid_consonants(liquid_cols, 
+                                                                                          total_consonant_no_remaining)
+    
+        # Remove the liquid and nasal from the ipa dictionary. 
+        all_consonants = ip.consonant_df
+        drop_cols = liquid_cols + ['Nasal']
+        consonants_without_liquid_nasal = all_consonants.drop(labels=drop_cols)
+
+        self.consonants = self.generate_remaining_consonants(consonants_without_liquid_nasal, 
+                                                             total_consonant_no_remaining)
                 
         self.consonants.update(liquid_consonants)
         self.consonants.update({'Nasal': nasal_consonants})
         self.consonants_list = [item for sublist in self.consonants.values() for item in sublist]
+        # Updat consonant list with generated results.
 
 
     def select_column(self, column_list):
@@ -275,6 +301,21 @@ class Phonology(object):
         selected_col = self.generate_consonant_row(selected_column_name)
 
         return selected_col
+    
+    @staticmethod
+    def encode_to_json(phoneme_list):
+        """
+        Encode list contents and convert to a json for passing to ajax.
+        """
+        encoded = [str(a.encode('unicode_escape', 'backslashreplace')) for a in
+                   list(phoneme_list)]
+        phoneme_code = [s.replace("b'\\\\u'", '') for s in encoded]
+        phoneme_code = [s.replace("\\\\u", '') for s in phoneme_code]
+        phoneme_code = [s.replace("'", '').upper() for s in phoneme_code]
+        phoneme_str = ','.join(phoneme_code)
+        # Single string with all the vowels, to pass to ajax.
+
+        return phoneme_str
 
         
 
