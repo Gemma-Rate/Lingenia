@@ -48,10 +48,6 @@ def make_app(test_config=None):
                 converted = []
                 for i in Syllables.all_syllables:
                     converted.append(pt.convert_to_decimal_encoding(i))
-                
-                if not number_of_words:
-                    # If no word number is specified, then generate 5 words.
-                    number_of_words = 5
 
                 Words_list = pt.Words(converted)
                 Words_list.generate_words(number_of_words)
