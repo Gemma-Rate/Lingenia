@@ -23,7 +23,7 @@ class Phonology(object):
         self.consonants_list = []
 
         self.ipa_consonants_layout = ip.consonant_df
-        self.vowels_probabilities = pv.phoible_vowels
+        self.vowel_probabilities = pv.phoible_vowels
         self.consonant_probabilities = pcs.phoible_consonants
 
     def update_probability(self, ipa_component, new_probability):
@@ -160,7 +160,7 @@ class Phonology(object):
         """
         Generate a row of consonants.
         """
-        consonant = self.ipa_consonants
+        consonant = self.ipa_consonants_layout
         row_data = consonant.loc[row_name, :]
         row_data = row_data.replace(to_replace='', value=np.nan)
         row_data = row_data.dropna()
