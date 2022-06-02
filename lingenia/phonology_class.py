@@ -22,6 +22,33 @@ class Phonology(object):
         self.consonants = {}
         self.consonants_list = []
 
+        self.ipa_consonants_layout = ip.consonant_df
+        self.vowels_probabilities = pv.phoible_vowels
+        self.consonant_probabilities = pcs.phoible_consonants
+
+    def update_probability(self, ipa_component, new_probability):
+        """
+        Update IPA element probability with a new probability. 
+        """
+        error = None
+        try:
+            self.vowels_probabilities[ipa_component] = new_probability
+        except KeyError:
+            pass # Try consonants.
+        try: 
+            self.vowels_probabilities[ipa_component] = new_probability
+        except KeyError:
+            print('Element not found, probability not changed.')
+            error = True
+        
+        return error
+
+    def restore_default_probabilities(self):
+        """
+        Restore default IPA element probabilities. 
+        """
+        pass
+
     def generate_phonemes(self):
         """
         Generate a complete set of phonemes for the language.
@@ -60,7 +87,7 @@ class Phonology(object):
         Generate a complete set of vowels for the language.
         """
         total_vowel_no = self.vowel_number
-        vowel_phoible_data = pd.DataFrame(pv.phoible_vowels)
+        vowel_phoible_data = pd.DataFrame(self.vowel_probabilities)
         # Load in vowel data from phoible.
         decoded = [bytes(a, 'utf-8').decode("unicode_escape") for a in
                    list(vowel_phoible_data.index.values)]
@@ -133,7 +160,7 @@ class Phonology(object):
         """
         Generate a row of consonants.
         """
-        consonant = ip.consonant_df
+        consonant = self.ipa_consonants
         row_data = consonant.loc[row_name, :]
         row_data = row_data.replace(to_replace='', value=np.nan)
         row_data = row_data.dropna()
@@ -145,7 +172,7 @@ class Phonology(object):
         """
         Select a consonant from the consonant column.
         """
-        consonant_phoible_data = pd.DataFrame(pcs.phoible_consonants)
+        consonant_phoible_data = pd.DataFrame(self.consonant_probabilities)
         decoded = [bytes(a, 'utf-8').decode("unicode_escape") for a in
                    list(consonant_phoible_data.index.values)]
         # Decode \u to unicode from the .csv
@@ -278,7 +305,7 @@ class Phonology(object):
                                                                                           total_consonant_no_remaining)
     
         # Remove the liquid and nasal from the ipa dictionary. 
-        all_consonants = ip.consonant_df
+        all_consonants = self.ipa_consonants_layout
         drop_cols = liquid_cols + ['Nasal']
         consonants_without_liquid_nasal = all_consonants.drop(labels=drop_cols)
 
