@@ -1,3 +1,8 @@
+"""
+Dictionaries to convert IPA symbols to and from ascii and decimal format 
+(for passing the data between HTML, Javascript and Python).
+"""
+
 convert_to_decimal = {"BI":"&#x0069", "BY":"&#x0079",
                         "B0268":"&#x0268", "B0289":"&#x0289",
                         "B026F":"&#x026F", "BU":"&#x0075",
