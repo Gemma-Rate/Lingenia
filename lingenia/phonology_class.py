@@ -88,11 +88,11 @@ class Phonology(object):
         """
         total_vowel_no = self.vowel_number
         vowel_phoible_data = pd.DataFrame(self.vowel_probabilities)
-        # Load in vowel data from phoible.
+        # Load in vowel data from Phoible.
         decoded = [bytes(a, 'utf-8').decode("unicode_escape") for a in
                    list(vowel_phoible_data.index.values)]
         vowel_phoible_data.index = decoded
-        # Decode \u to unicode from the .csv
+        # Decode \u to unicode from the DataFrame.
 
         gen_vowel_list = []
         # List to fill with generated vowel phonemes.

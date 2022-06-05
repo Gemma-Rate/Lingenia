@@ -1,16 +1,15 @@
 """Unit tests for phonology generation"""
 
 import pandas as pd
+import phonology_class as pc
 import unittest as ut
 
-
-class TestPhonology(unittest.TestCase):
+class TestPhonology(ut.TestCase):
 
     def initialize_test_data(self):
         """
         Create the test data to use in phonology. 
         """
-
         test_vowels = {'test':[['\u0069','\u0079'], ['\u026A','\u028F'], ['\u0065','\u00F8'], ['\u00F8\u031E'],
                                ['\u025B','\u0153'], ['\u00E6'], ['\u0061','\u0276']],
                        'test 2':[['\u0268','\u0289'], '', ['\u0258','\u0275'], ['\u0259'],
@@ -27,7 +26,7 @@ class TestPhonology(unittest.TestCase):
                                 '\\u0259': 0.21206409, '\\u025C': 0.010995916000000001,
                                 '\\u025E': 0.001885014, '\\u0250': 0.023562677,
                                 '\\u0061\\u0308':0.025133522000000002}}
-
+                                
         test_consonants = {'test':[['\u006D'], ['\u0070','\u0062'],
                                     ['\u0278', '\u03B2'], '', '',
                                     ['\u0299'], '', ''],
@@ -37,12 +36,34 @@ class TestPhonology(unittest.TestCase):
         cindex = ['test row 1', 'test row 2', 'test row 3', 'test row 4',
                 'test row 5', 'test row 6', 'test row 7', 'test row 8']
 
-        consonant_df = pd.DataFrame(test_consonants, index=cindex)
+        test_consonants_frequency = {'frequency': {'\\u006D': 0.915488533, '\\u0070': 0.814954445,
+                                                   '\\u0062': 0.5988061579999999, 
+                                                   '\\u0278': 0.048067860999999996,
+                                                   '\\u03B2': 0.011624253999999999, 
+                                                   '\\u0299': 0.000628338,'\\u0271': 0.005655042,
+                                                   '\\u0066': 0.41753063100000004, 
+                                                   '\\u0076': 0.256361923,
+                                                   '\\u028B': 0.022306001000000002,
+                                                   '\\u2C71': 0.009110901999999999}}
+
+        test_instance = pc.Phonology(3, 3)
+
+        test_instance.vowels_probabilities = test_vowels_frequency
+        test_instance.consonants_probabilities = test_consonants_frequency
+        # Update the instance with only the probabilities defined above. 
+
+        return test_instance
 
 
-
-    def test_vowel_creation(self):
+    def test_generate_vowels_full(self):
         
         """
         Tests that vowels are selected and that the selection consists of the right number of vowels.
         """
+        pass
+
+    def test_update_probability(self):
+        """
+        Test changing the probability of a vowel or consonant. 
+        """
+        pass
