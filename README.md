@@ -85,5 +85,9 @@ Each syllable is selected randomly (with replacement) from the overall pool gene
 
 ## Attributions 
 
-The files containing probabilities of phonemes (both vowels and consonants) are modified from the Phoible database: Moran, Steven & McCloy, Daniel (eds.) 2019., PHOIBLE 2.0., Jena: Max Planck Institute for the Science of Human History. (Available online at http://phoible.org, Accessed on 2020-07 and 2020-08.)
+The files containing probabilities of phonemes (both vowels and consonants) are modified from the Phoible database: Moran, Steven & McCloy, Daniel (eds.) 2019., PHOIBLE 2.0., Jena: Max Planck Institute for the Science of Human History. (Available online at http://phoible.org, Accessed on 2020-07 and 2020-08).
+
+Some of the processes and rules I have used for Phonology generation are based on the excellent 'How to make a Language' series from Biblaridion on Youtube (found [here](https://www.youtube.com/channel/UCMjTcpv56G_W0FRIdPHBn4A)).
+
+Word generation is inspired by the original Awkwords (created by Petr Mejzlík), whilst the sonority hierarchy information and general IPA grid Phonemes were taken from Wikipedia.
 
